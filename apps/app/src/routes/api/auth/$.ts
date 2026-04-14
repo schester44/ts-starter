@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { createFileRoute } from "@tanstack/react-router";
-import { withSpan, SpanStatusCode } from "@starter/observe";
+import { withSpan, SpanStatusCode } from "@__APP_NAME__/observe";
 
 async function handleAuthRequest(request: Request) {
   const url = new URL(request.url);
@@ -26,7 +26,7 @@ async function handleAuthRequest(request: Request) {
 
       return response;
     },
-    { tracer: "starter-auth" },
+    { tracer: "__APP_NAME__-auth" },
   );
 }
 

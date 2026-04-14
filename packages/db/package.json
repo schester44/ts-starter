@@ -1,5 +1,5 @@
 {
-  "name": "@starter/db",
+  "name": "@__APP_NAME__/db",
   "version": "1.0.0",
   "private": true,
   "type": "module",

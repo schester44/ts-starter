@@ -1,6 +1,16 @@
-# Starter
+# ts-starter
 
-Monorepo built with TanStack Start, Prisma, Better Auth, Tailwind v4 / shadcn, and Turborepo.
+Opinionated monorepo starter with TanStack Start, Prisma, Better Auth, Tailwind v4 / shadcn, OpenTelemetry, and Turborepo.
+
+## Quick Start
+
+```bash
+git clone git@github.com:schester44/ts-starter.git my-app
+cd my-app
+./setup.sh
+```
+
+The setup script will ask for your app name and replace all placeholders, install deps, and generate the Prisma client.
 
 ## Stack
 
@@ -9,7 +19,7 @@ Monorepo built with TanStack Start, Prisma, Better Auth, Tailwind v4 / shadcn, a
 - **Database**: PostgreSQL + [Prisma](https://www.prisma.io)
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com) (New York)
 - **Monorepo**: Yarn 4 workspaces + [Turborepo](https://turbo.build)
-- **Observability**: [OpenTelemetry](https://opentelemetry.io) (vendor-neutral, works with Datadog, Grafana, Honeycomb, etc.)
+- **Observability**: [OpenTelemetry](https://opentelemetry.io) (vendor-neutral — works with [otap](https://github.com/schester44/otap), Datadog, Grafana, Honeycomb, etc.)
 - **Linting**: ESLint 9 (flat config) + Prettier
 
 ## Structure
@@ -20,31 +30,16 @@ packages/db            → Prisma schema & client
 packages/observability → OpenTelemetry instrumentation
 ```
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 22 (`nvm use`)
-- PostgreSQL
-- Google OAuth credentials (optional, for social login)
-
-### Setup
+## After Setup
 
 ```bash
-# Install dependencies
-corepack enable
-yarn install
-
 # Configure environment
 cp .env-example apps/app/.env
-# Edit apps/app/.env with your DATABASE_URL, BETTER_AUTH_SECRET, etc.
+# Edit apps/app/.env with your values
 
 # Create database & run migrations
-createdb starter
-cd packages/db && DATABASE_URL="postgresql://localhost:5432/starter" npx prisma migrate dev --name init
-
-# Generate Prisma client
-yarn generate
+createdb <your-app-name>
+cd packages/db && npx prisma migrate dev --name init
 
 # Start dev server
 yarn dev
@@ -74,7 +69,7 @@ The app will be running at [http://localhost:3000](http://localhost:3000).
 | `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
 | `OTEL_ENABLED` | Enable OpenTelemetry tracing (`true`/`false`) |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | OTLP endpoint (default: `http://localhost:4318`) |
-| `OTEL_SERVICE_NAME` | Service name (default: `starter`) |
+| `OTEL_SERVICE_NAME` | Service name |
 
 ## Adding shadcn Components
 

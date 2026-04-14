@@ -1,11 +1,11 @@
-import { db } from "@starter/db";
+import { db } from "@__APP_NAME__/db";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { organization } from "better-auth/plugins/organization";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 
 export const auth = betterAuth({
-  appName: "Starter",
+  appName: "__APP_TITLE__",
   telemetry: {
     enabled: false,
   },

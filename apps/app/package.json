@@ -1,5 +1,5 @@
 {
-  "name": "@starter/app",
+  "name": "@__APP_NAME__/app",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -11,8 +11,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@starter/db": "workspace:*",
-    "@starter/observe": "workspace:*",
+    "@__APP_NAME__/db": "workspace:*",
+    "@__APP_NAME__/observe": "workspace:*",
     "@tailwindcss/vite": "^4",
     "@tanstack/react-router": "^1",
     "@tanstack/react-start": "^1",

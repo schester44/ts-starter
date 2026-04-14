@@ -2,7 +2,7 @@
  * Re-exports from @opentelemetry/api for convenient access throughout the app.
  *
  * Usage:
- *   import { trace, context, SpanStatusCode } from "@starter/observe";
+ *   import { trace, context, SpanStatusCode } from "@__APP_NAME__/observe";
  *
  *   const tracer = trace.getTracer("my-service");
  *   const span = tracer.startSpan("my-operation");
@@ -43,7 +43,7 @@ export async function withSpan<T>(
     attributes?: Record<string, string | number | boolean>;
   },
 ): Promise<T> {
-  const tracer = trace.getTracer(options?.tracer ?? "starter");
+  const tracer = trace.getTracer(options?.tracer ?? "__APP_NAME__");
 
   return tracer.startActiveSpan(name, async (span) => {
     if (options?.attributes) {

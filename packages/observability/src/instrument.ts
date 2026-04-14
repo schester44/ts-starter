@@ -5,15 +5,15 @@
  * auto-instrumentation of HTTP, database drivers, etc.
  *
  * Usage:
- *   node --import @starter/observe/instrument ./server.js
+ *   node --import @__APP_NAME__/observe/instrument ./server.js
  *
  * Or in your entry file:
- *   import "@starter/observe/instrument";
+ *   import "@__APP_NAME__/observe/instrument";
  *
  * Configuration via environment variables:
  *   OTEL_ENABLED=true                    — Enable tracing (default: false)
  *   OTEL_EXPORTER_OTLP_ENDPOINT          — OTLP endpoint (default: http://localhost:4318)
- *   OTEL_SERVICE_NAME                     — Service name (default: starter)
+ *   OTEL_SERVICE_NAME                     — Service name (default: __APP_NAME__)
  *   OTEL_RESOURCE_ATTRIBUTES              — Additional resource attributes
  *
  * Datadog Agent:
@@ -41,7 +41,7 @@ if (enabled) {
     process.env.OTEL_EXPORTER_OTLP_ENDPOINT || "http://localhost:4318";
 
   const resource = resourceFromAttributes({
-    [ATTR_SERVICE_NAME]: process.env.OTEL_SERVICE_NAME || "starter",
+    [ATTR_SERVICE_NAME]: process.env.OTEL_SERVICE_NAME || "__APP_NAME__",
     [ATTR_SERVICE_VERSION]: process.env.npm_package_version || "0.0.0",
     "deployment.environment.name": process.env.NODE_ENV || "development",
   });
@@ -75,7 +75,7 @@ if (enabled) {
   console.log({
     msg: "OpenTelemetry tracing enabled",
     endpoint,
-    service: process.env.OTEL_SERVICE_NAME || "starter",
+    service: process.env.OTEL_SERVICE_NAME || "__APP_NAME__",
   });
 
   // Graceful shutdown

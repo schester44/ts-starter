@@ -1,5 +1,5 @@
 {
-  "name": "@starter/observe",
+  "name": "@__APP_NAME__/observe",
   "version": "1.0.0",
   "private": true,
   "type": "module",
