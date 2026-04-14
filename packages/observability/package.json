@@ -1,0 +1,32 @@
+{
+  "name": "@mailtrail/observe",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "./src/instrument.ts"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./instrument": {
+      "types": "./src/instrument.ts",
+      "default": "./src/instrument.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1",
+    "@opentelemetry/auto-instrumentations-node": "^0.58",
+    "@opentelemetry/exporter-metrics-otlp-http": "^0.200",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.200",
+    "@opentelemetry/resources": "^2",
+    "@opentelemetry/sdk-node": "^0.200",
+    "@opentelemetry/semantic-conventions": "^1"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  }
+}
