@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@mailtrail/db": "workspace:*",
+    "@mailtrail/observe": "workspace:*",
     "@tailwindcss/vite": "^4",
     "@tanstack/react-router": "^1",
     "@tanstack/react-start": "^1",

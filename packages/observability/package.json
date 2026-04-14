@@ -23,6 +23,7 @@
     "@opentelemetry/exporter-metrics-otlp-http": "^0.200",
     "@opentelemetry/exporter-trace-otlp-http": "^0.200",
     "@opentelemetry/resources": "^2",
+    "@opentelemetry/sdk-metrics": "^2",
     "@opentelemetry/sdk-node": "^0.200",
     "@opentelemetry/semantic-conventions": "^1"
   },

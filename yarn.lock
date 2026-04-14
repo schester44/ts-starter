@@ -975,6 +975,7 @@ __metadata:
   resolution: "@mailtrail/app@workspace:apps/app"
   dependencies:
     "@mailtrail/db": "workspace:*"
+    "@mailtrail/observe": "workspace:*"
     "@tailwindcss/vite": "npm:^4"
     "@tanstack/react-router": "npm:^1"
     "@tanstack/react-start": "npm:^1"
@@ -1005,7 +1006,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mailtrail/observe@workspace:packages/observability":
+"@mailtrail/observe@workspace:*, @mailtrail/observe@workspace:packages/observability":
   version: 0.0.0-use.local
   resolution: "@mailtrail/observe@workspace:packages/observability"
   dependencies:
@@ -1014,6 +1015,7 @@ __metadata:
     "@opentelemetry/exporter-metrics-otlp-http": "npm:^0.200"
     "@opentelemetry/exporter-trace-otlp-http": "npm:^0.200"
     "@opentelemetry/resources": "npm:^2"
+    "@opentelemetry/sdk-metrics": "npm:^2"
     "@opentelemetry/sdk-node": "npm:^0.200"
     "@opentelemetry/semantic-conventions": "npm:^1"
     typescript: "npm:^5"
@@ -2062,7 +2064,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/resources@npm:^2, @opentelemetry/resources@npm:^2.0.0":
+"@opentelemetry/resources@npm:2.6.1, @opentelemetry/resources@npm:^2, @opentelemetry/resources@npm:^2.0.0":
   version: 2.6.1
   resolution: "@opentelemetry/resources@npm:2.6.1"
   dependencies:
@@ -2096,6 +2098,18 @@ __metadata:
   peerDependencies:
     "@opentelemetry/api": ">=1.9.0 <1.10.0"
   checksum: 10c0/9a3c87738671f29a496a39d65b3ab0829b52d0f31c0be662ea575a8f77bc5444044fd01513c891abdff6bf6344a08730e18f79253a85e68962669f3e1fa12e72
+  languageName: node
+  linkType: hard
+
+"@opentelemetry/sdk-metrics@npm:^2":
+  version: 2.6.1
+  resolution: "@opentelemetry/sdk-metrics@npm:2.6.1"
+  dependencies:
+    "@opentelemetry/core": "npm:2.6.1"
+    "@opentelemetry/resources": "npm:2.6.1"
+  peerDependencies:
+    "@opentelemetry/api": ">=1.9.0 <1.10.0"
+  checksum: 10c0/29745e1bfbdcd97cfb3201b6094c9d58550478a62d473e5b842e6705ee2419117381f3ee5d6e89a412522f6dda6b01516a69326c677eabcbc51bb38901922042
   languageName: node
   linkType: hard
 
