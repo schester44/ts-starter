@@ -1,11 +1,11 @@
-import { db } from "@mailtrail/db";
+import { db } from "@starter/db";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { organization } from "better-auth/plugins/organization";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 
 export const auth = betterAuth({
-  appName: "Mailtrail",
+  appName: "Starter",
   telemetry: {
     enabled: false,
   },

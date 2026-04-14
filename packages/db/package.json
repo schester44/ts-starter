@@ -1,5 +1,5 @@
 {
-  "name": "@mailtrail/db",
+  "name": "@starter/db",
   "version": "1.0.0",
   "private": true,
   "type": "module",

@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { createFileRoute } from "@tanstack/react-router";
-import { withSpan, SpanStatusCode } from "@mailtrail/observe";
+import { withSpan, SpanStatusCode } from "@starter/observe";
 
 async function handleAuthRequest(request: Request) {
   const url = new URL(request.url);
@@ -26,11 +26,12 @@ async function handleAuthRequest(request: Request) {
 
       return response;
     },
-    { tracer: "mailtrail-auth" },
+    { tracer: "starter-auth" },
   );
 }
 
 export const Route = createFileRoute("/api/auth/$")({
+  // @ts-expect-error — server handlers processed by TanStack Start vite plugin
   server: {
     handlers: {
       GET: ({ request }: { request: Request }) => handleAuthRequest(request),

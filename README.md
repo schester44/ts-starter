@@ -1,4 +1,4 @@
-# Mailtrail
+# Starter
 
 Monorepo built with TanStack Start, Prisma, Better Auth, Tailwind v4 / shadcn, and Turborepo.
 
@@ -40,8 +40,8 @@ cp .env-example apps/app/.env
 # Edit apps/app/.env with your DATABASE_URL, BETTER_AUTH_SECRET, etc.
 
 # Create database & run migrations
-createdb mailtrail
-cd packages/db && DATABASE_URL="postgresql://localhost:5432/mailtrail" npx prisma migrate dev --name init
+createdb starter
+cd packages/db && DATABASE_URL="postgresql://localhost:5432/starter" npx prisma migrate dev --name init
 
 # Generate Prisma client
 yarn generate
@@ -74,7 +74,7 @@ The app will be running at [http://localhost:3000](http://localhost:3000).
 | `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
 | `OTEL_ENABLED` | Enable OpenTelemetry tracing (`true`/`false`) |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | OTLP endpoint (default: `http://localhost:4318`) |
-| `OTEL_SERVICE_NAME` | Service name (default: `mailtrail`) |
+| `OTEL_SERVICE_NAME` | Service name (default: `starter`) |
 
 ## Adding shadcn Components
 

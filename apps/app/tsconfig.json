@@ -13,8 +13,8 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@mailtrail/db": ["../../packages/db/src/index"],
-      "@mailtrail/db/*": ["../../packages/db/src/*"]
+      "@starter/db": ["../../packages/db/src/index"],
+      "@starter/db/*": ["../../packages/db/src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "**/*.ts", "**/*.tsx", "**/*.mts"],

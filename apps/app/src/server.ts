@@ -1,4 +1,4 @@
-import "@mailtrail/observe/instrument";
+import "@starter/observe/instrument";
 import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
 
 export default createServerEntry({

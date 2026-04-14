@@ -63,7 +63,7 @@ function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-background">
       <div className="w-full max-w-sm space-y-6 rounded-lg border border-border p-8">
         <div className="space-y-2 text-center">
-          <h1 className="text-2xl font-bold tracking-tight">Mailtrail</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Starter</h1>
           <p className="text-sm text-muted-foreground">
             {isSignUp ? "Create an account" : "Sign in to your account"}
           </p>
