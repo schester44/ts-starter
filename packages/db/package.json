@@ -1,0 +1,31 @@
+{
+  "name": "@mailtrail/db",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./client": {
+      "types": "./src/generated/prisma/client.ts",
+      "default": "./src/generated/prisma/client.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "generate": "prisma generate",
+    "migrate": "prisma migrate",
+    "reset": "prisma migrate reset --force"
+  },
+  "dependencies": {
+    "@prisma/client": "^6"
+  },
+  "devDependencies": {
+    "dotenv": "^16",
+    "prisma": "^6",
+    "typescript": "^5"
+  }
+}

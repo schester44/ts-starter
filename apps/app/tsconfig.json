@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["vite/client"],
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@mailtrail/db": ["../../packages/db/src/index"],
+      "@mailtrail/db/*": ["../../packages/db/src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "**/*.ts", "**/*.tsx", "**/*.mts"],
+  "exclude": ["**/node_modules", "**/.*/*", "dist", ".output"]
+}
