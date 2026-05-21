@@ -1,3 +1,6 @@
+export { createLogger } from "./logger.js";
+export type { Logger } from "./logger.js";
+
 /**
  * Re-exports from @opentelemetry/api for convenient access throughout the app.
  *

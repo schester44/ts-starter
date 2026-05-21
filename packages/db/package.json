@@ -18,7 +18,8 @@
   "scripts": {
     "generate": "prisma generate",
     "migrate": "prisma migrate",
-    "reset": "prisma migrate reset --force"
+    "reset": "prisma migrate reset --force",
+    "seed": "prisma db seed"
   },
   "dependencies": {
     "@prisma/client": "^6"
@@ -26,6 +27,7 @@
   "devDependencies": {
     "dotenv": "^16",
     "prisma": "^6",
+    "tsx": "^4",
     "typescript": "^5"
   }
 }

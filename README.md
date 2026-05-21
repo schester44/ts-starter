@@ -34,8 +34,8 @@ packages/observability → OpenTelemetry instrumentation
 
 ```bash
 # Configure environment
-cp .env-example apps/app/.env
-# Edit apps/app/.env with your values
+cp .env-example apps/web/.env
+# Edit apps/web/.env with your values
 
 # Create database & run migrations
 createdb <your-app-name>
@@ -49,27 +49,27 @@ The app will be running at [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Command | Description |
-| --- | --- |
-| `yarn dev` | Start all workspaces in dev mode |
-| `yarn build` | Production build |
-| `yarn lint` | Lint all workspaces |
-| `yarn typecheck` | Type-check all workspaces |
-| `yarn generate` | Generate Prisma client |
-| `yarn migrate` | Run Prisma migrations |
+| Command          | Description                      |
+| ---------------- | -------------------------------- |
+| `yarn dev`       | Start all workspaces in dev mode |
+| `yarn build`     | Production build                 |
+| `yarn lint`      | Lint all workspaces              |
+| `yarn typecheck` | Type-check all workspaces        |
+| `yarn generate`  | Generate Prisma client           |
+| `yarn migrate`   | Run Prisma migrations            |
 
 ## Environment Variables
 
-| Variable | Description |
-| --- | --- |
-| `DATABASE_URL` | PostgreSQL connection string |
-| `BETTER_AUTH_SECRET` | Auth encryption secret (min 32 chars) |
-| `BETTER_AUTH_URL` | App base URL |
-| `GOOGLE_CLIENT_ID` | Google OAuth client ID |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
-| `OTEL_ENABLED` | Enable OpenTelemetry tracing (`true`/`false`) |
+| Variable                      | Description                                      |
+| ----------------------------- | ------------------------------------------------ |
+| `DATABASE_URL`                | PostgreSQL connection string                     |
+| `BETTER_AUTH_SECRET`          | Auth encryption secret (min 32 chars)            |
+| `BETTER_AUTH_URL`             | App base URL                                     |
+| `GOOGLE_CLIENT_ID`            | Google OAuth client ID                           |
+| `GOOGLE_CLIENT_SECRET`        | Google OAuth client secret                       |
+| `OTEL_ENABLED`                | Enable OpenTelemetry tracing (`true`/`false`)    |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | OTLP endpoint (default: `http://localhost:4318`) |
-| `OTEL_SERVICE_NAME` | Service name |
+| `OTEL_SERVICE_NAME`           | Service name                                     |
 
 ## Adding shadcn Components
 

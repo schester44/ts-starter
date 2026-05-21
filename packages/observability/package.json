@@ -25,7 +25,9 @@
     "@opentelemetry/resources": "^2",
     "@opentelemetry/sdk-metrics": "^2",
     "@opentelemetry/sdk-node": "^0.200",
-    "@opentelemetry/semantic-conventions": "^1"
+    "@opentelemetry/semantic-conventions": "^1",
+    "pino": "^9",
+    "pino-pretty": "^13"
   },
   "devDependencies": {
     "typescript": "^5"

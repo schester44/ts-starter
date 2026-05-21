@@ -6,12 +6,12 @@ import { dirname, resolve } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const envPaths = [resolve(__dirname, "../../apps/app/.env")];
+const envPaths = [resolve(__dirname, "../../apps/web/.env")];
 
 const IS_TEST = process.env.NODE_ENV === "test";
 
 if (IS_TEST) {
-  envPaths.unshift(resolve(__dirname, "../../apps/app/.env.test"));
+  envPaths.unshift(resolve(__dirname, "../../apps/web/.env.test"));
 }
 
 dotenv.config({ path: envPaths });
@@ -27,6 +27,7 @@ export default defineConfig({
   schema: "./src/prisma/schema.prisma",
   migrations: {
     path: "./src/prisma/migrations",
+    seed: "npx tsx ./src/prisma/seed.ts",
   },
   datasource: {
     url: process.env.DATABASE_URL,

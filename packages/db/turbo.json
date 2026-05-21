@@ -13,6 +13,10 @@
       "cache": false,
       "persistent": true,
       "passThroughEnv": ["DATABASE_URL"]
+    },
+    "seed": {
+      "cache": false,
+      "passThroughEnv": ["DATABASE_URL"]
     }
   }
 }

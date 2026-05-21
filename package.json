@@ -15,7 +15,8 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "generate": "turbo run generate",
-    "migrate": "turbo run migrate"
+    "migrate": "turbo run migrate",
+    "seed": "turbo run seed"
   },
   "devDependencies": {
     "@eslint/js": "^9",
