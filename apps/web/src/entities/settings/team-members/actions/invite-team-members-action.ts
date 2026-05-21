@@ -1,12 +1,13 @@
 import { auth } from "@/lib/auth";
 import { actionAuth } from "@/middleware/auth";
+import { actionTracingMiddleware } from "@/middleware/tracing";
 import { roleSchema } from "@/lib/auth/roles";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
 import z from "zod";
 
 export const inviteTeamMembersAction = createServerFn()
-  .middleware([actionAuth])
+  .middleware([actionTracingMiddleware, actionAuth])
   .inputValidator(
     z.object({
       emails: z.array(z.string().email()),

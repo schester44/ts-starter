@@ -6,15 +6,25 @@ import {
 } from "@tanstack/react-router";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { title } from "@/lib/meta";
+import { getThemeServerFn } from "@/lib/theme";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
+  beforeLoad: async () => {
+    const theme = await getThemeServerFn();
+
+    return { theme };
+  },
   component: RootComponent,
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "__APP_TITLE__" },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1, minimum-scale=1",
+      },
+      { title: title() },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
   }),

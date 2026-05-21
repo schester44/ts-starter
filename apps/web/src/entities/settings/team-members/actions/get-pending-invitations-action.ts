@@ -1,9 +1,10 @@
 import { actionAuth } from "@/middleware/auth";
+import { actionTracingMiddleware } from "@/middleware/tracing";
 import { db } from "@__APP_NAME__/db";
 import { createServerFn } from "@tanstack/react-start";
 
 export const getPendingInvitations = createServerFn({ method: "GET" })
-  .middleware([actionAuth])
+  .middleware([actionTracingMiddleware, actionAuth])
   .handler(async ({ context: { activeOrganizationId } }) => {
     const invitations = await db.invitation.findMany({
       where: {

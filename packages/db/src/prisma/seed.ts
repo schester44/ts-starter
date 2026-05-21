@@ -29,9 +29,9 @@ await prisma.user.upsert({
         id: "Ab0t1jlz1t0EgkgL0ZUvQUxt5r6PYFxx",
         accountId: "9nq8KaL07MRGiIDRYURQ3JAlqjFIqX65",
         providerId: "credential",
-        // password: "Password1!" (hashed with scrypt, works with default BETTER_AUTH_SECRET)
+        // password: "Password1!" (hashed via @better-auth/utils/password)
         password:
-          "42fbe3cb899a6d53ea97f4520a9e126d:5f3d324de5d7cbf123ccc38ed18e3c94a22406411136bae7109b4c9ce8582783093152541e04374aaa085be796615e550108a4034a739bed763d85346b636d1d",
+          "6ccd5c782e94dbd521a315b4a77ead48:bf564f041f1bda2199d0a7e13d836b921d003efb34e0e3d2b95ed3dc92920a43bae67d7046e3d30300602f1771611b5e38ecd1a42ad1a843b2c740cbe06b1f84",
       },
     },
     members: {

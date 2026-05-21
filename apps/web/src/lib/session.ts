@@ -28,7 +28,7 @@ export const fetchSession = createServerFn({ method: "GET" }).handler(
         name: session.user.name,
         email: session.user.email,
         image: session.user.image,
-        role: session.user.role,
+        role: (session.user as Record<string, unknown>).role as string ?? null,
       },
       session: session.session,
       organization: organization ?? null,

@@ -9,14 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AuthedRouteRouteImport } from './routes/_authed/route'
+import { Route as NoOrgRouteImport } from './routes/no-org'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AcceptInvitationIdRouteImport } from './routes/accept-invitation.$id'
 import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
 import { Route as AuthedSettingsIndexRouteImport } from './routes/_authed/settings/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthedSettingsTeamRouteImport } from './routes/_authed/settings/team'
 
-const AuthedRouteRoute = AuthedRouteRouteImport.update({
+const NoOrgRoute = NoOrgRouteImport.update({
+  id: '/no-org',
+  path: '/no-org',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthedRoute = AuthedRouteImport.update({
   id: '/_authed',
   getParentRoute: () => rootRouteImport,
 } as any)
@@ -25,15 +38,20 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcceptInvitationIdRoute = AcceptInvitationIdRouteImport.update({
+  id: '/accept-invitation/$id',
+  path: '/accept-invitation/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthedDashboardRoute = AuthedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => AuthedRouteRoute,
+  getParentRoute: () => AuthedRoute,
 } as any)
 const AuthedSettingsIndexRoute = AuthedSettingsIndexRouteImport.update({
   id: '/settings/',
   path: '/settings/',
-  getParentRoute: () => AuthedRouteRoute,
+  getParentRoute: () => AuthedRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
@@ -43,19 +61,25 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 const AuthedSettingsTeamRoute = AuthedSettingsTeamRouteImport.update({
   id: '/settings/team',
   path: '/settings/team',
-  getParentRoute: () => AuthedRouteRoute,
+  getParentRoute: () => AuthedRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/no-org': typeof NoOrgRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings/': typeof AuthedSettingsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/no-org': typeof NoOrgRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings': typeof AuthedSettingsIndexRoute
@@ -63,8 +87,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_authed': typeof AuthedRouteRouteWithChildren
+  '/_authed': typeof AuthedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/no-org': typeof NoOrgRoute
   '/_authed/dashboard': typeof AuthedDashboardRoute
+  '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/_authed/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_authed/settings/': typeof AuthedSettingsIndexRoute
@@ -73,17 +100,31 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/login'
+    | '/no-org'
     | '/dashboard'
+    | '/accept-invitation/$id'
     | '/settings/team'
     | '/api/auth/$'
     | '/settings/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/settings/team' | '/api/auth/$' | '/settings'
+  to:
+    | '/'
+    | '/login'
+    | '/no-org'
+    | '/dashboard'
+    | '/accept-invitation/$id'
+    | '/settings/team'
+    | '/api/auth/$'
+    | '/settings'
   id:
     | '__root__'
     | '/'
     | '/_authed'
+    | '/login'
+    | '/no-org'
     | '/_authed/dashboard'
+    | '/accept-invitation/$id'
     | '/_authed/settings/team'
     | '/api/auth/$'
     | '/_authed/settings/'
@@ -91,17 +132,34 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthedRouteRoute: typeof AuthedRouteRouteWithChildren
+  AuthedRoute: typeof AuthedRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  NoOrgRoute: typeof NoOrgRoute
+  AcceptInvitationIdRoute: typeof AcceptInvitationIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/no-org': {
+      id: '/no-org'
+      path: '/no-org'
+      fullPath: '/no-org'
+      preLoaderRoute: typeof NoOrgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authed': {
       id: '/_authed'
       path: ''
       fullPath: '/'
-      preLoaderRoute: typeof AuthedRouteRouteImport
+      preLoaderRoute: typeof AuthedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -111,19 +169,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/accept-invitation/$id': {
+      id: '/accept-invitation/$id'
+      path: '/accept-invitation/$id'
+      fullPath: '/accept-invitation/$id'
+      preLoaderRoute: typeof AcceptInvitationIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authed/dashboard': {
       id: '/_authed/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthedDashboardRouteImport
-      parentRoute: typeof AuthedRouteRoute
+      parentRoute: typeof AuthedRoute
     }
     '/_authed/settings/': {
       id: '/_authed/settings/'
       path: '/settings'
       fullPath: '/settings/'
       preLoaderRoute: typeof AuthedSettingsIndexRouteImport
-      parentRoute: typeof AuthedRouteRoute
+      parentRoute: typeof AuthedRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -137,30 +202,32 @@ declare module '@tanstack/react-router' {
       path: '/settings/team'
       fullPath: '/settings/team'
       preLoaderRoute: typeof AuthedSettingsTeamRouteImport
-      parentRoute: typeof AuthedRouteRoute
+      parentRoute: typeof AuthedRoute
     }
   }
 }
 
-interface AuthedRouteRouteChildren {
+interface AuthedRouteChildren {
   AuthedDashboardRoute: typeof AuthedDashboardRoute
   AuthedSettingsTeamRoute: typeof AuthedSettingsTeamRoute
   AuthedSettingsIndexRoute: typeof AuthedSettingsIndexRoute
 }
 
-const AuthedRouteRouteChildren: AuthedRouteRouteChildren = {
+const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedDashboardRoute: AuthedDashboardRoute,
   AuthedSettingsTeamRoute: AuthedSettingsTeamRoute,
   AuthedSettingsIndexRoute: AuthedSettingsIndexRoute,
 }
 
-const AuthedRouteRouteWithChildren = AuthedRouteRoute._addFileChildren(
-  AuthedRouteRouteChildren,
-)
+const AuthedRouteWithChildren =
+  AuthedRoute._addFileChildren(AuthedRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthedRouteRoute: AuthedRouteRouteWithChildren,
+  AuthedRoute: AuthedRouteWithChildren,
+  LoginRoute: LoginRoute,
+  NoOrgRoute: NoOrgRoute,
+  AcceptInvitationIdRoute: AcceptInvitationIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

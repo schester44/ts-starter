@@ -8,7 +8,11 @@ export const Route = createFileRoute("/_authed")({
     const session = await fetchSession();
 
     if (!session) {
-      throw redirect({ to: "/" });
+      throw redirect({ to: "/login" });
+    }
+
+    if (!session.organization) {
+      throw redirect({ to: "/no-org" });
     }
 
     return { session };
