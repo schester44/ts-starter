@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "target": "ESNext",
+    "lib": ["esnext"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": false,
+    "incremental": true,
+    "paths": {
+      "@__APP_NAME__/observe": ["../../packages/observability/src/index"],
+      "@__APP_NAME__/observe/*": ["../../packages/observability/src/*"]
+    }
+  },
+  "exclude": ["**/node_modules", "**/.*/*", "dist"],
+  "include": ["src/**/*.ts"]
+}

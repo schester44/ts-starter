@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["esnext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@__APP_NAME__/queues": ["../../packages/queues/src/index"],
+      "@__APP_NAME__/queues/*": ["../../packages/queues/src/*"],
+      "@__APP_NAME__/observe": ["../../packages/observability/src/index"],
+      "@__APP_NAME__/observe/*": ["../../packages/observability/src/*"]
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/node_modules", "**/.*/*", "dist"]
+}

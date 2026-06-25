@@ -19,7 +19,8 @@
     "generate": "prisma generate",
     "migrate": "prisma migrate",
     "reset": "prisma migrate reset --force",
-    "seed": "prisma db seed"
+    "seed": "prisma db seed",
+    "data-migrate": "tsx ./src/data-migrations/runner.ts"
   },
   "dependencies": {
     "@prisma/client": "^6"
