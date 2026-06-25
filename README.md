@@ -25,9 +25,14 @@ The setup script will ask for your app name and replace all placeholders, instal
 ## Structure
 
 ```
-apps/app               → TanStack Start application
-packages/db            → Prisma schema & client
+apps/web               → TanStack Start application
+apps/worker            → Background job worker (pg-boss)
+packages/db            → Prisma schema, client & data migrations
+packages/queues        → Type-safe job queue definitions (pg-boss)
+packages/storage       → File storage abstraction (S3 / local)
+packages/testing       → Shared test utilities, fixtures & factories
 packages/observability → OpenTelemetry instrumentation
+heroku/                → Heroku deploy scripts (post-build & release)
 ```
 
 ## After Setup
@@ -57,6 +62,82 @@ The app will be running at [http://localhost:3000](http://localhost:3000).
 | `yarn typecheck` | Type-check all workspaces        |
 | `yarn generate`  | Generate Prisma client           |
 | `yarn migrate`   | Run Prisma migrations            |
+| `yarn worker`    | Start the background job worker  |
+
+## Queues
+
+Background jobs are powered by [pg-boss](https://github.com/timgit/pg-boss) — no extra infrastructure required, jobs live in your Postgres database.
+
+**Define a queue** in `packages/queues/src/queues/`:
+
+```ts
+import { z } from "zod";
+import { queues } from "../queues";
+
+export const exampleQueue = queues.create({
+  name: "example",
+  schema: z.object({ message: z.string() }),
+  sendOptions: { retryLimit: 3, retryDelay: 30, retryBackoff: true },
+});
+```
+
+**Send a job** from anywhere (e.g. a route handler):
+
+```ts
+import { exampleQueue } from "@__APP_NAME__/queues";
+await exampleQueue.send({ message: "hello" });
+```
+
+**Process jobs** by registering a handler in `apps/worker`:
+
+```ts
+await exampleQueue.work(async (job) => {
+  console.log(job.data.message);
+});
+```
+
+## Storage
+
+The `@__APP_NAME__/storage` package provides a unified `StorageClient` interface with two built-in implementations:
+
+- **`makeS3StorageClient`** — for production (S3-compatible)
+- **`makeLocalStorageClient`** — for local development (writes to disk)
+- **`createStorageClient`** — auto-selects based on environment
+
+```ts
+import { createStorageClient } from "@__APP_NAME__/storage";
+const storage = createStorageClient();
+
+const { key } = await storage.put({ key: "uploads/photo.jpg", data: buffer, contentType: "image/jpeg" });
+const file = await storage.get(key);
+```
+
+## Testing
+
+The `@__APP_NAME__/testing` package provides shared test utilities:
+
+- **`test` / `describe` / `expect`** — extended Vitest with automatic database reset and environment fixtures
+- **Factories** — `createUser`, `createOrganization`, `createMember`, `createInvitation`
+- **Mocks** — job and logger mocks for isolated unit tests
+
+```ts
+import { test, expect } from "@__APP_NAME__/testing";
+
+test("example", async ({ db, env }) => {
+  // db is a clean PrismaClient, env has test environment helpers
+});
+```
+
+## Data Migrations
+
+One-off data migrations live in `packages/db/src/data-migrations/migrations/`. They are tracked in a `_data_migrations` table and are idempotent — each migration runs at most once per environment.
+
+## Heroku Deployment
+
+The `heroku/` directory contains deploy scripts:
+
+- **`post-build.sh`** — verifies database connectivity, runs Prisma migrations with retry logic
+- **`release.sh`** — seeds the database if empty, runs schema and data migrations
 
 ## Using Supabase
 
@@ -121,6 +202,9 @@ For more details, see the [Supabase Prisma guide](https://supabase.com/docs/guid
 | `OTEL_ENABLED`                | Enable OpenTelemetry tracing (`true`/`false`)    |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | OTLP endpoint (default: `http://localhost:4318`) |
 | `OTEL_SERVICE_NAME`           | Service name                                     |
+| `AWS_REGION`                  | AWS region for S3 storage                        |
+| `AWS_S3_BUCKET`               | S3 bucket name                                   |
+| `LOCAL_STORAGE_PATH`          | Local file storage path (dev only)               |
 
 ## Adding shadcn Components
 
