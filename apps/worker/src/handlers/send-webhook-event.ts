@@ -1,6 +1,5 @@
-import type PgBoss from "pg-boss";
 import crypto from "node:crypto";
-import type { WebhookPayload } from "@__APP_NAME__/queues";
+import type { Job, WebhookPayload } from "@__APP_NAME__/queues";
 import { decryptSecret } from "@/lib/webhooks";
 import { logger } from "@/lib/logger";
 import { db } from "@__APP_NAME__/db";
@@ -65,7 +64,7 @@ async function sendEvent(
 }
 
 export async function handleSendWebhookEvent(
-  job: PgBoss.JobWithMetadata<WebhookPayload>,
+  job: Job<WebhookPayload>,
 ) {
   const { organizationId, idempotencyKey } = job.data;
 

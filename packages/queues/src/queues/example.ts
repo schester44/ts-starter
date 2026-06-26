@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { queues } from "../queues";
+import { defineQueue } from "../define";
 
 /**
  * Example queue definition.
@@ -7,10 +7,10 @@ import { queues } from "../queues";
  * To add a new queue:
  * 1. Create a file in this directory with your queue schema and definition
  * 2. Export it from ../index.ts
- * 3. In apps/worker, register a handler with `yourQueue.work(handler)`
- * 4. In apps/web (or anywhere), send jobs with `yourQueue.send(data)`
+ * 3. In apps/worker, register a handler with `provider.work(yourQueue, handler)`
+ * 4. In apps/web (or anywhere), send jobs with `provider.send(yourQueue, data)`
  */
-export const exampleQueue = queues.create({
+export const exampleQueue = defineQueue({
   name: "example",
   schema: z.object({
     message: z.string(),

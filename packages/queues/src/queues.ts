@@ -1,20 +1,26 @@
-import { createQueueClient } from "./client";
+import { PgBossProvider } from "./providers/pgboss";
+import type { QueueProvider } from "./types";
 
 const globalForQueues = globalThis as unknown as {
-  queues: ReturnType<typeof createQueueClient> | undefined;
+  queueProvider: QueueProvider | undefined;
 };
 
-export const queues =
-  globalForQueues.queues ??
-  createQueueClient({
+export const queueProvider: QueueProvider =
+  globalForQueues.queueProvider ??
+  new PgBossProvider({
     database: {
       connectionString: getUrl(),
     },
   });
 
 if (process.env.NODE_ENV !== "production") {
-  globalForQueues.queues = queues;
+  globalForQueues.queueProvider = queueProvider;
 }
+
+/**
+ * @deprecated Use `queueProvider` instead. This alias exists for backward compatibility.
+ */
+export const queues = queueProvider;
 
 function getUrl() {
   const DATABASE_URL = process.env.DATABASE_URL;
