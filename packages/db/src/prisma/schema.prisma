@@ -89,6 +89,7 @@ model Organization {
   invitations      Invitation[]
   apiKeys          ApiKey[]
   webhookEndpoints WebhookEndpoint[]
+  webhookEvents    WebhookEvent[]
 
   @@map("organizations")
 }
@@ -115,10 +116,55 @@ model WebhookEndpoint {
   createdAt               DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt               DateTime? @map("updated_at") @db.Timestamptz(6)
 
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  attempts     WebhookAttempt[]
 
   @@unique([organizationId, url])
   @@map("webhook_endpoints")
+}
+
+model WebhookEvent {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  idempotencyKey String   @map("idempotency_key") @db.VarChar(255)
+  topic          String   @db.VarChar(255)
+  resourceId     String?  @map("resource_id") @db.VarChar(255)
+  requestBody    Json?    @map("request_body") @db.JsonB
+  organizationId String   @map("organization_id")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  organization Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  attempts     WebhookAttempt[]
+
+  @@unique([organizationId, idempotencyKey])
+  @@index([organizationId, topic])
+  @@map("webhook_events")
+}
+
+enum WebhookAttemptStatus {
+  PENDING
+  SUCCESS
+  FAILED
+
+  @@map("webhook_attempt_status")
+}
+
+model WebhookAttempt {
+  id         String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  eventId    String               @map("event_id") @db.Uuid
+  endpointId String               @map("endpoint_id") @db.Uuid
+  status     WebhookAttemptStatus
+  httpCode   Int?                 @map("http_code")
+  latencyMs  Int?                 @map("latency_ms")
+  retryNum   Int                  @default(0) @map("retry_num")
+  createdAt  DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  event    WebhookEvent    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  endpoint WebhookEndpoint @relation(fields: [endpointId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+  @@index([endpointId, createdAt])
+  @@index([status, createdAt])
+  @@map("webhook_attempts")
 }
 
 model ApiKey {

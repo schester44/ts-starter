@@ -1,7 +1,8 @@
-import { exampleQueue } from "@__APP_NAME__/queues";
+import { exampleQueue, webhook } from "@__APP_NAME__/queues";
 import { queues } from "@__APP_NAME__/queues/queues";
 import { logger } from "./lib/logger";
 import { handleExample } from "./handlers/example";
+import { handleSendWebhookEvent } from "./handlers/send-webhook-event";
 
 async function startWorker() {
   logger.info({ msg: "Starting pg-boss worker..." });
@@ -12,6 +13,7 @@ async function startWorker() {
 
     // Register queue handlers here
     await exampleQueue.work(handleExample);
+    await webhook.work(handleSendWebhookEvent);
 
     // --- Graceful shutdown ---
 
