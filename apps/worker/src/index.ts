@@ -1,42 +1,43 @@
-import { exampleQueue, webhook, queueProvider } from "@__APP_NAME__/queues";
+import { exampleQueue, webhook } from "@__APP_NAME__/queues";
+import { queues } from "@__APP_NAME__/queues/queues";
 import { logger } from "./lib/logger";
 import { handleExample } from "./handlers/example";
 import { handleSendWebhookEvent } from "./handlers/send-webhook-event";
 
 async function startWorker() {
-  logger.info({ msg: "Starting worker..." });
+  logger.info({ msg: "Starting pg-boss worker..." });
 
   try {
-    queueProvider.setLogger(logger);
-    await queueProvider.start();
+    queues.setLogger(logger);
+    await queues.start();
 
     // Register queue handlers here
-    await queueProvider.work(exampleQueue, handleExample);
-    await queueProvider.work(webhook, handleSendWebhookEvent);
+    await exampleQueue.work(handleExample);
+    await webhook.work(handleSendWebhookEvent);
 
     // --- Graceful shutdown ---
 
     process.on("uncaughtException", async (error) => {
       logger.error({ msg: "Uncaught Exception", error });
-      await queueProvider.stop();
+      await queues.stop();
       process.exit(1);
     });
 
     process.on("unhandledRejection", async (reason) => {
       logger.error({ msg: "Unhandled Rejection", reason });
-      await queueProvider.stop();
+      await queues.stop();
       process.exit(1);
     });
 
     process.on("SIGTERM", async () => {
       logger.info({ msg: "Received SIGTERM, shutting down gracefully..." });
-      await queueProvider.stop();
+      await queues.stop();
       process.exit(0);
     });
 
     process.on("SIGINT", async () => {
       logger.info({ msg: "Received SIGINT, shutting down gracefully..." });
-      await queueProvider.stop();
+      await queues.stop();
       process.exit(0);
     });
 

@@ -1,13 +1,6 @@
-export { defineQueue } from "./define";
-export { queueProvider } from "./queues";
-export { PgBossProvider } from "./providers/pgboss";
-export type {
-  QueueProvider,
-  QueueConfig,
-  Job,
-  JobHandler,
-  SendOptions,
-} from "./types";
+export { QueueClient, createQueueClient } from "./client";
+export type { QueueDefinition } from "./types";
+export { queues } from "./queues";
 export { ExpectedRetryableError, isExpectedRetryableError } from "./errors";
 
 export * from "./queues/example";

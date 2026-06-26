@@ -1,4 +1,4 @@
-import { defineQueue } from "../../define";
+import { queues } from "../../queues";
 import z from "zod";
 
 const baseWebhookSchema = z.object({
@@ -37,7 +37,7 @@ export const webhookPayload = z.discriminatedUnion("event", [
 
 export type WebhookPayload = z.infer<typeof webhookPayload>;
 
-export const webhook = defineQueue({
+export const webhook = queues.create({
   name: "webhook",
   schema: webhookPayload,
   sendOptions: {
