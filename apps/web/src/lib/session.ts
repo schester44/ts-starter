@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import type { Role } from "@/lib/auth/roles";
 import { db } from "@__APP_NAME__/db";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
@@ -19,7 +20,9 @@ export const fetchSession = createServerFn({ method: "GET" }).handler(
     });
 
     const organization = memberships.find(
-      (m) => m.organization.id === session.session.activeOrganizationId,
+      (m) =>
+        m.organization.id ===
+        (session.session as Record<string, unknown>).activeOrganizationId,
     )?.organization;
 
     return {
@@ -28,7 +31,7 @@ export const fetchSession = createServerFn({ method: "GET" }).handler(
         name: session.user.name,
         email: session.user.email,
         image: session.user.image,
-        role: (session.user as Record<string, unknown>).role as string ?? null,
+        role: (session as Record<string, unknown>).role as Role ?? null,
       },
       session: session.session,
       organization: organization ?? null,

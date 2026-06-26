@@ -9,6 +9,7 @@ import {
 // This must remain as const to preserve literal types in consumers.
 export const statement = {
   ...defaultStatements,
+  developerTools: ["view"],
   // Add your resource permissions below, e.g.:
   // post: ["create", "update", "delete"],
   // settings: ["view", "update"],
@@ -20,6 +21,7 @@ export const admin = ac.newRole({
   ...defaultStatements,
   ...adminAc.statements,
   ...ownerAc.statements,
+  developerTools: ["view"],
   // Add admin permissions for your resources here, e.g.:
   // post: ["create", "update", "delete"],
 });

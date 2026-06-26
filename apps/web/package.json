@@ -14,6 +14,7 @@
     "@__APP_NAME__/db": "workspace:*",
     "@__APP_NAME__/observe": "workspace:*",
     "@__APP_NAME__/queues": "workspace:*",
+    "@radix-ui/react-collapsible": "^1.1.14",
     "@tailwindcss/vite": "^4",
     "@tanstack/react-router": "^1",
     "@tanstack/react-start": "^1",

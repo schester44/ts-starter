@@ -18,6 +18,9 @@ import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
 import { Route as AuthedSettingsIndexRouteImport } from './routes/_authed/settings/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthedSettingsTeamRouteImport } from './routes/_authed/settings/team'
+import { Route as AuthedDevelopersWebhooksRouteImport } from './routes/_authed/developers/webhooks'
+import { Route as AuthedDevelopersJobsRouteImport } from './routes/_authed/developers/jobs'
+import { Route as AuthedDevelopersApiKeysRouteImport } from './routes/_authed/developers/api-keys'
 
 const NoOrgRoute = NoOrgRouteImport.update({
   id: '/no-org',
@@ -63,6 +66,22 @@ const AuthedSettingsTeamRoute = AuthedSettingsTeamRouteImport.update({
   path: '/settings/team',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedDevelopersWebhooksRoute =
+  AuthedDevelopersWebhooksRouteImport.update({
+    id: '/developers/webhooks',
+    path: '/developers/webhooks',
+    getParentRoute: () => AuthedRoute,
+  } as any)
+const AuthedDevelopersJobsRoute = AuthedDevelopersJobsRouteImport.update({
+  id: '/developers/jobs',
+  path: '/developers/jobs',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedDevelopersApiKeysRoute = AuthedDevelopersApiKeysRouteImport.update({
+  id: '/developers/api-keys',
+  path: '/developers/api-keys',
+  getParentRoute: () => AuthedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -70,6 +89,9 @@ export interface FileRoutesByFullPath {
   '/no-org': typeof NoOrgRoute
   '/dashboard': typeof AuthedDashboardRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
+  '/developers/api-keys': typeof AuthedDevelopersApiKeysRoute
+  '/developers/jobs': typeof AuthedDevelopersJobsRoute
+  '/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
   '/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings/': typeof AuthedSettingsIndexRoute
@@ -80,6 +102,9 @@ export interface FileRoutesByTo {
   '/no-org': typeof NoOrgRoute
   '/dashboard': typeof AuthedDashboardRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
+  '/developers/api-keys': typeof AuthedDevelopersApiKeysRoute
+  '/developers/jobs': typeof AuthedDevelopersJobsRoute
+  '/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
   '/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings': typeof AuthedSettingsIndexRoute
@@ -92,6 +117,9 @@ export interface FileRoutesById {
   '/no-org': typeof NoOrgRoute
   '/_authed/dashboard': typeof AuthedDashboardRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
+  '/_authed/developers/api-keys': typeof AuthedDevelopersApiKeysRoute
+  '/_authed/developers/jobs': typeof AuthedDevelopersJobsRoute
+  '/_authed/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
   '/_authed/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_authed/settings/': typeof AuthedSettingsIndexRoute
@@ -104,6 +132,9 @@ export interface FileRouteTypes {
     | '/no-org'
     | '/dashboard'
     | '/accept-invitation/$id'
+    | '/developers/api-keys'
+    | '/developers/jobs'
+    | '/developers/webhooks'
     | '/settings/team'
     | '/api/auth/$'
     | '/settings/'
@@ -114,6 +145,9 @@ export interface FileRouteTypes {
     | '/no-org'
     | '/dashboard'
     | '/accept-invitation/$id'
+    | '/developers/api-keys'
+    | '/developers/jobs'
+    | '/developers/webhooks'
     | '/settings/team'
     | '/api/auth/$'
     | '/settings'
@@ -125,6 +159,9 @@ export interface FileRouteTypes {
     | '/no-org'
     | '/_authed/dashboard'
     | '/accept-invitation/$id'
+    | '/_authed/developers/api-keys'
+    | '/_authed/developers/jobs'
+    | '/_authed/developers/webhooks'
     | '/_authed/settings/team'
     | '/api/auth/$'
     | '/_authed/settings/'
@@ -204,17 +241,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedSettingsTeamRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/developers/webhooks': {
+      id: '/_authed/developers/webhooks'
+      path: '/developers/webhooks'
+      fullPath: '/developers/webhooks'
+      preLoaderRoute: typeof AuthedDevelopersWebhooksRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/developers/jobs': {
+      id: '/_authed/developers/jobs'
+      path: '/developers/jobs'
+      fullPath: '/developers/jobs'
+      preLoaderRoute: typeof AuthedDevelopersJobsRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/developers/api-keys': {
+      id: '/_authed/developers/api-keys'
+      path: '/developers/api-keys'
+      fullPath: '/developers/api-keys'
+      preLoaderRoute: typeof AuthedDevelopersApiKeysRouteImport
+      parentRoute: typeof AuthedRoute
+    }
   }
 }
 
 interface AuthedRouteChildren {
   AuthedDashboardRoute: typeof AuthedDashboardRoute
+  AuthedDevelopersApiKeysRoute: typeof AuthedDevelopersApiKeysRoute
+  AuthedDevelopersJobsRoute: typeof AuthedDevelopersJobsRoute
+  AuthedDevelopersWebhooksRoute: typeof AuthedDevelopersWebhooksRoute
   AuthedSettingsTeamRoute: typeof AuthedSettingsTeamRoute
   AuthedSettingsIndexRoute: typeof AuthedSettingsIndexRoute
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedDashboardRoute: AuthedDashboardRoute,
+  AuthedDevelopersApiKeysRoute: AuthedDevelopersApiKeysRoute,
+  AuthedDevelopersJobsRoute: AuthedDevelopersJobsRoute,
+  AuthedDevelopersWebhooksRoute: AuthedDevelopersWebhooksRoute,
   AuthedSettingsTeamRoute: AuthedSettingsTeamRoute,
   AuthedSettingsIndexRoute: AuthedSettingsIndexRoute,
 }

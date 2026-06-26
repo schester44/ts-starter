@@ -15,7 +15,8 @@ export const actionAuth = createMiddleware({ type: "function" }).server(
       throw redirect({ to: "/" });
     }
 
-    const activeOrganizationId = session.session.activeOrganizationId as string;
+    const activeOrganizationId = (session.session as Record<string, unknown>)
+      .activeOrganizationId as string;
 
     return next({
       context: {

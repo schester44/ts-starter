@@ -13,6 +13,8 @@ export function checkPermission<
   if (!role) return false;
 
   const permissions = rolePermissions[role];
+  if (!permissions) return false;
+
   const resourcePermissions = permissions[resource as keyof typeof permissions];
 
   if (!resourcePermissions) return false;

@@ -85,8 +85,10 @@ model Organization {
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime? @map("updated_at") @db.Timestamptz(6)
 
-  members     Member[]
-  invitations Invitation[]
+  members          Member[]
+  invitations      Invitation[]
+  apiKeys          ApiKey[]
+  webhookEndpoints WebhookEndpoint[]
 
   @@map("organizations")
 }
@@ -101,6 +103,36 @@ model Member {
   createdAt      DateTime     @default(now()) @map("created_at")
 
   @@map("members")
+}
+
+model WebhookEndpoint {
+  id                      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId          String    @map("organization_id")
+  name                    String    @db.VarChar(255)
+  url                     String    @db.VarChar(255)
+  signingSecretCipherText Bytes     @map("signing_secret_ct")
+  signingSecretNonce      Bytes     @map("signing_secret_nonce")
+  createdAt               DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt               DateTime? @map("updated_at") @db.Timestamptz(6)
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, url])
+  @@map("webhook_endpoints")
+}
+
+model ApiKey {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String    @map("organization_id")
+  name           String    @db.VarChar(255)
+  keyId          String    @unique @map("key_id") @db.VarChar(255)
+  hashedSecret   String    @map("hashed_secret") @db.VarChar(255)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime? @map("updated_at") @db.Timestamptz(6)
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@map("api_keys")
 }
 
 model Invitation {

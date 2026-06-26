@@ -1,8 +1,47 @@
 import { db } from "@__APP_NAME__/db";
-import { betterAuth } from "better-auth";
+import { betterAuth, Session } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { organization } from "better-auth/plugins/organization";
+import { admin as adminPlugin } from "better-auth/plugins/admin";
+import { customSession } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
+import { ac, admin, member } from "./auth/permissions";
+import type { Role } from "./auth/roles";
+
+// Options are defined separately so customSession can infer the correct types
+// Ref: https://www.better-auth.com/docs/concepts/session-management#caveats-on-customizing-session-response
+const options = {
+  databaseHooks: {
+    session: {
+      create: {
+        before: async (session: Session) => {
+          const dbMember = await db.member.findFirst({
+            where: {
+              userId: session.userId,
+            },
+          });
+
+          return {
+            data: {
+              ...session,
+              activeOrganizationId: dbMember?.organizationId || null,
+            },
+          };
+        },
+      },
+    },
+  },
+  plugins: [
+    organization({
+      ac,
+      roles: {
+        admin,
+        member,
+      },
+      allowUserToCreateOrganization: true,
+    }),
+  ],
+};
 
 export const auth = betterAuth({
   appName: "__APP_TITLE__",
@@ -31,31 +70,28 @@ export const auth = betterAuth({
     },
   },
 
-  databaseHooks: {
-    session: {
-      create: {
-        before: async (session) => {
-          const member = await db.member.findFirst({
-            where: {
-              userId: session.userId,
-            },
-          });
-
-          return {
-            data: {
-              ...session,
-              activeOrganizationId: member?.organizationId || null,
-            },
-          };
-        },
-      },
-    },
-  },
+  ...options,
 
   plugins: [
-    organization({
-      allowUserToCreateOrganization: true,
-    }),
+    ...options.plugins,
+    adminPlugin(),
+    customSession(async ({ user, session }) => {
+      const dbMember = await db.member.findFirst({
+        where: {
+          userId: user.id,
+          organizationId:
+            (session as Record<string, unknown>).activeOrganizationId as
+              | string
+              | undefined,
+        },
+      });
+
+      return {
+        role: (dbMember?.role as Role) || null,
+        user,
+        session,
+      };
+    }, options),
     tanstackStartCookies(), // Must be last
   ],
 });
