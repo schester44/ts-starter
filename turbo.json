@@ -19,6 +19,9 @@
     "seed": {
       "cache": false
     },
+    "reset": {
+      "cache": false
+    },
     "lint": {
       "outputs": []
     },
