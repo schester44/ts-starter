@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useMatchRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authed/settings")({
   component: SettingsLayout,
@@ -20,19 +20,26 @@ function SettingsLayout() {
       </div>
 
       <nav className="flex gap-1 border-b">
-        {tabs.map((tab) => (
-          <Link
-            key={tab.to}
-            to={tab.to}
-            className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground border-b-2 border-transparent -mb-px transition-colors"
-            activeProps={{
-              className:
-                "px-4 py-2 text-sm font-medium text-foreground border-b-2 border-primary -mb-px transition-colors",
-            }}
-          >
-            {tab.label}
-          </Link>
-        ))}
+        {tabs.map((tab) => {
+          return (
+            <Link
+              key={tab.to}
+              to={tab.to}
+              activeOptions={{ exact: true }}
+              className="px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors"
+              inactiveProps={{
+                className:
+                  "px-4 py-2 text-sm font-medium border-b-2 border-transparent text-muted-foreground hover:text-foreground -mb-px transition-colors",
+              }}
+              activeProps={{
+                className:
+                  "px-4 py-2 text-sm font-medium border-b-2 border-primary text-foreground -mb-px transition-colors",
+              }}
+            >
+              {tab.label}
+            </Link>
+          );
+        })}
       </nav>
 
       <Outlet />

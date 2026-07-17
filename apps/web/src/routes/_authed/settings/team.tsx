@@ -150,13 +150,7 @@ function TeamPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-lg font-semibold text-foreground">Team Members</h2>
-          <p className="text-sm text-muted-foreground">
-            Manage your team members and their access
-          </p>
-        </div>
+      <div className="flex items-center justify-end">
         <Button
           className="flex items-center gap-2"
           onClick={() => setAddMemberOpen(true)}

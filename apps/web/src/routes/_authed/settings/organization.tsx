@@ -54,13 +54,6 @@ function OrganizationPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-lg font-semibold text-foreground">Organization</h2>
-        <p className="text-sm text-muted-foreground">
-          Manage your organization settings
-        </p>
-      </div>
-
       <div className="rounded-lg border bg-card p-6 space-y-4">
         <div className="grid gap-1">
           <span className="text-sm font-medium text-muted-foreground">
