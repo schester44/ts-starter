@@ -6,9 +6,9 @@ import { dirname, resolve } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const envPaths = [resolve(__dirname, "../../apps/web/.env")];
-
 const IS_TEST = process.env.NODE_ENV === "test";
+
+const envPaths = [resolve(__dirname, "../../apps/web/.env")];
 
 if (IS_TEST) {
   envPaths.unshift(resolve(__dirname, "../../apps/web/.env.test"));
@@ -31,6 +31,5 @@ export default defineConfig({
   },
   datasource: {
     url: process.env.DATABASE_URL,
-    directUrl: process.env.DIRECT_DATABASE_URL,
   },
 });

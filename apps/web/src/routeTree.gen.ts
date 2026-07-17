@@ -18,6 +18,7 @@ import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
 import { Route as AuthedSettingsIndexRouteImport } from './routes/_authed/settings/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthedSettingsTeamRouteImport } from './routes/_authed/settings/team'
+import { Route as AuthedSettingsAuditLogRouteImport } from './routes/_authed/settings/audit-log'
 import { Route as AuthedDevelopersWebhooksRouteImport } from './routes/_authed/developers/webhooks'
 import { Route as AuthedDevelopersJobsRouteImport } from './routes/_authed/developers/jobs'
 import { Route as AuthedDevelopersApiKeysRouteImport } from './routes/_authed/developers/api-keys'
@@ -66,6 +67,11 @@ const AuthedSettingsTeamRoute = AuthedSettingsTeamRouteImport.update({
   path: '/settings/team',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedSettingsAuditLogRoute = AuthedSettingsAuditLogRouteImport.update({
+  id: '/settings/audit-log',
+  path: '/settings/audit-log',
+  getParentRoute: () => AuthedRoute,
+} as any)
 const AuthedDevelopersWebhooksRoute =
   AuthedDevelopersWebhooksRouteImport.update({
     id: '/developers/webhooks',
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/developers/api-keys': typeof AuthedDevelopersApiKeysRoute
   '/developers/jobs': typeof AuthedDevelopersJobsRoute
   '/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
+  '/settings/audit-log': typeof AuthedSettingsAuditLogRoute
   '/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings/': typeof AuthedSettingsIndexRoute
@@ -105,6 +112,7 @@ export interface FileRoutesByTo {
   '/developers/api-keys': typeof AuthedDevelopersApiKeysRoute
   '/developers/jobs': typeof AuthedDevelopersJobsRoute
   '/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
+  '/settings/audit-log': typeof AuthedSettingsAuditLogRoute
   '/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings': typeof AuthedSettingsIndexRoute
@@ -120,6 +128,7 @@ export interface FileRoutesById {
   '/_authed/developers/api-keys': typeof AuthedDevelopersApiKeysRoute
   '/_authed/developers/jobs': typeof AuthedDevelopersJobsRoute
   '/_authed/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
+  '/_authed/settings/audit-log': typeof AuthedSettingsAuditLogRoute
   '/_authed/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_authed/settings/': typeof AuthedSettingsIndexRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/developers/api-keys'
     | '/developers/jobs'
     | '/developers/webhooks'
+    | '/settings/audit-log'
     | '/settings/team'
     | '/api/auth/$'
     | '/settings/'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/developers/api-keys'
     | '/developers/jobs'
     | '/developers/webhooks'
+    | '/settings/audit-log'
     | '/settings/team'
     | '/api/auth/$'
     | '/settings'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/_authed/developers/api-keys'
     | '/_authed/developers/jobs'
     | '/_authed/developers/webhooks'
+    | '/_authed/settings/audit-log'
     | '/_authed/settings/team'
     | '/api/auth/$'
     | '/_authed/settings/'
@@ -241,6 +253,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedSettingsTeamRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/settings/audit-log': {
+      id: '/_authed/settings/audit-log'
+      path: '/settings/audit-log'
+      fullPath: '/settings/audit-log'
+      preLoaderRoute: typeof AuthedSettingsAuditLogRouteImport
+      parentRoute: typeof AuthedRoute
+    }
     '/_authed/developers/webhooks': {
       id: '/_authed/developers/webhooks'
       path: '/developers/webhooks'
@@ -270,6 +289,7 @@ interface AuthedRouteChildren {
   AuthedDevelopersApiKeysRoute: typeof AuthedDevelopersApiKeysRoute
   AuthedDevelopersJobsRoute: typeof AuthedDevelopersJobsRoute
   AuthedDevelopersWebhooksRoute: typeof AuthedDevelopersWebhooksRoute
+  AuthedSettingsAuditLogRoute: typeof AuthedSettingsAuditLogRoute
   AuthedSettingsTeamRoute: typeof AuthedSettingsTeamRoute
   AuthedSettingsIndexRoute: typeof AuthedSettingsIndexRoute
 }
@@ -279,6 +299,7 @@ const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedDevelopersApiKeysRoute: AuthedDevelopersApiKeysRoute,
   AuthedDevelopersJobsRoute: AuthedDevelopersJobsRoute,
   AuthedDevelopersWebhooksRoute: AuthedDevelopersWebhooksRoute,
+  AuthedSettingsAuditLogRoute: AuthedSettingsAuditLogRoute,
   AuthedSettingsTeamRoute: AuthedSettingsTeamRoute,
   AuthedSettingsIndexRoute: AuthedSettingsIndexRoute,
 }

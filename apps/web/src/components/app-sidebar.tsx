@@ -6,6 +6,7 @@ import {
   Key,
   Webhook,
   Activity,
+  ClipboardList,
 } from "lucide-react";
 import {
   Sidebar,
@@ -83,6 +84,17 @@ export function AppSidebar({ user, organization }: AppSidebarProps) {
                   >
                     <Settings />
                     <span>Settings</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="Audit Log">
+                  <Link
+                    to="/settings/audit-log"
+                    activeProps={{ className: "bg-sidebar-accent" }}
+                  >
+                    <ClipboardList />
+                    <span>Audit Log</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

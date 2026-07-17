@@ -1,7 +1,5 @@
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_DATABASE_URL")
+  provider = "postgresql"
 }
 
 generator client {
@@ -90,6 +88,7 @@ model Organization {
   apiKeys          ApiKey[]
   webhookEndpoints WebhookEndpoint[]
   webhookEvents    WebhookEvent[]
+  auditLogs        AuditLog[]
 
   @@map("organizations")
 }
@@ -179,6 +178,73 @@ model ApiKey {
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@map("api_keys")
+}
+
+enum AuditLogActionType {
+  MEMBER_INVITED
+  MEMBER_REMOVED
+  MEMBER_ROLE_UPDATED
+  INVITATION_CANCELLED
+  SETTINGS_UPDATED
+
+  @@map("audit_log_action_type")
+}
+
+enum AuditLogActorType {
+  USER
+  SYSTEM
+  API_KEY
+
+  @@map("audit_log_actor_type")
+}
+
+enum AuditLogEntityType {
+  ORGANIZATION
+  USER
+  INVITATION
+  MEMBER
+  API_KEY
+
+  @@map("audit_log_entity_type")
+}
+
+model AuditLog {
+  id             String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String @map("organization_id")
+
+  action     AuditLogActionType
+  entityType AuditLogEntityType @map("entity_type")
+  entityId   String             @map("entity_id")
+
+  actorType AuditLogActorType @map("actor_type")
+  actorId   String?           @map("actor_id")
+  actorName String?           @map("actor_name") @db.VarChar(255)
+
+  metadata Json? @db.JsonB
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt    DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  occurredAt   DateTime     @default(now()) @map("occurred_at") @db.Timestamptz(6)
+
+  relatedEntities AuditLogEntity[]
+
+  @@index([organizationId, entityType, entityId, occurredAt(sort: Desc)])
+  @@index([organizationId, occurredAt(sort: Desc)])
+  @@index([organizationId, actorType, actorId])
+  @@map("audit_log")
+}
+
+model AuditLogEntity {
+  id         String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  auditLogId String             @map("audit_log_id") @db.Uuid
+  entityType AuditLogEntityType @map("entity_type")
+  entityId   String             @map("entity_id") @db.Uuid
+
+  auditLog AuditLog @relation(fields: [auditLogId], references: [id], onDelete: Cascade)
+
+  @@unique([auditLogId, entityType, entityId])
+  @@index([entityType, entityId, auditLogId])
+  @@map("audit_log_entities")
 }
 
 model Invitation {

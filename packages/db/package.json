@@ -13,6 +13,10 @@
       "types": "./src/generated/prisma/client.ts",
       "default": "./src/generated/prisma/client.ts"
     },
+    "./generated/prisma/enums": {
+      "types": "./src/generated/prisma/enums.ts",
+      "default": "./src/generated/prisma/enums.ts"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -23,11 +27,12 @@
     "data-migrate": "tsx ./src/data-migrations/runner.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6"
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7"
   },
   "devDependencies": {
     "dotenv": "^16",
-    "prisma": "^6",
+    "prisma": "^7",
     "tsx": "^4",
     "typescript": "^5"
   }
