@@ -100,7 +100,7 @@ export function AppSidebar({
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip="Audit Log">
                   <Link
-                    to="/settings/audit-log"
+                    to="/audit-log"
                     activeProps={{ className: "bg-sidebar-accent" }}
                   >
                     <ClipboardList />

@@ -14,11 +14,13 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcceptInvitationIdRouteImport } from './routes/accept-invitation.$id'
+import { Route as AuthedSettingsRouteImport } from './routes/_authed/settings'
 import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
+import { Route as AuthedAuditLogRouteImport } from './routes/_authed/audit-log'
 import { Route as AuthedSettingsIndexRouteImport } from './routes/_authed/settings/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthedSettingsTeamRouteImport } from './routes/_authed/settings/team'
-import { Route as AuthedSettingsAuditLogRouteImport } from './routes/_authed/settings/audit-log'
+import { Route as AuthedSettingsOrganizationRouteImport } from './routes/_authed/settings/organization'
 import { Route as AuthedDevelopersWebhooksRouteImport } from './routes/_authed/developers/webhooks'
 import { Route as AuthedDevelopersJobsRouteImport } from './routes/_authed/developers/jobs'
 import { Route as AuthedDevelopersApiKeysRouteImport } from './routes/_authed/developers/api-keys'
@@ -47,15 +49,25 @@ const AcceptInvitationIdRoute = AcceptInvitationIdRouteImport.update({
   path: '/accept-invitation/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthedSettingsRoute = AuthedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthedRoute,
+} as any)
 const AuthedDashboardRoute = AuthedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthedRoute,
 } as any)
-const AuthedSettingsIndexRoute = AuthedSettingsIndexRouteImport.update({
-  id: '/settings/',
-  path: '/settings/',
+const AuthedAuditLogRoute = AuthedAuditLogRouteImport.update({
+  id: '/audit-log',
+  path: '/audit-log',
   getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedSettingsIndexRoute = AuthedSettingsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthedSettingsRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
@@ -63,15 +75,16 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthedSettingsTeamRoute = AuthedSettingsTeamRouteImport.update({
-  id: '/settings/team',
-  path: '/settings/team',
-  getParentRoute: () => AuthedRoute,
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AuthedSettingsRoute,
 } as any)
-const AuthedSettingsAuditLogRoute = AuthedSettingsAuditLogRouteImport.update({
-  id: '/settings/audit-log',
-  path: '/settings/audit-log',
-  getParentRoute: () => AuthedRoute,
-} as any)
+const AuthedSettingsOrganizationRoute =
+  AuthedSettingsOrganizationRouteImport.update({
+    id: '/organization',
+    path: '/organization',
+    getParentRoute: () => AuthedSettingsRoute,
+  } as any)
 const AuthedDevelopersWebhooksRoute =
   AuthedDevelopersWebhooksRouteImport.update({
     id: '/developers/webhooks',
@@ -93,12 +106,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/no-org': typeof NoOrgRoute
+  '/audit-log': typeof AuthedAuditLogRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/settings': typeof AuthedSettingsRouteWithChildren
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/developers/api-keys': typeof AuthedDevelopersApiKeysRoute
   '/developers/jobs': typeof AuthedDevelopersJobsRoute
   '/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
-  '/settings/audit-log': typeof AuthedSettingsAuditLogRoute
+  '/settings/organization': typeof AuthedSettingsOrganizationRoute
   '/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings/': typeof AuthedSettingsIndexRoute
@@ -107,12 +122,13 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/no-org': typeof NoOrgRoute
+  '/audit-log': typeof AuthedAuditLogRoute
   '/dashboard': typeof AuthedDashboardRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/developers/api-keys': typeof AuthedDevelopersApiKeysRoute
   '/developers/jobs': typeof AuthedDevelopersJobsRoute
   '/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
-  '/settings/audit-log': typeof AuthedSettingsAuditLogRoute
+  '/settings/organization': typeof AuthedSettingsOrganizationRoute
   '/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings': typeof AuthedSettingsIndexRoute
@@ -123,12 +139,14 @@ export interface FileRoutesById {
   '/_authed': typeof AuthedRouteWithChildren
   '/login': typeof LoginRoute
   '/no-org': typeof NoOrgRoute
+  '/_authed/audit-log': typeof AuthedAuditLogRoute
   '/_authed/dashboard': typeof AuthedDashboardRoute
+  '/_authed/settings': typeof AuthedSettingsRouteWithChildren
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/_authed/developers/api-keys': typeof AuthedDevelopersApiKeysRoute
   '/_authed/developers/jobs': typeof AuthedDevelopersJobsRoute
   '/_authed/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
-  '/_authed/settings/audit-log': typeof AuthedSettingsAuditLogRoute
+  '/_authed/settings/organization': typeof AuthedSettingsOrganizationRoute
   '/_authed/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_authed/settings/': typeof AuthedSettingsIndexRoute
@@ -139,12 +157,14 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/no-org'
+    | '/audit-log'
     | '/dashboard'
+    | '/settings'
     | '/accept-invitation/$id'
     | '/developers/api-keys'
     | '/developers/jobs'
     | '/developers/webhooks'
-    | '/settings/audit-log'
+    | '/settings/organization'
     | '/settings/team'
     | '/api/auth/$'
     | '/settings/'
@@ -153,12 +173,13 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/no-org'
+    | '/audit-log'
     | '/dashboard'
     | '/accept-invitation/$id'
     | '/developers/api-keys'
     | '/developers/jobs'
     | '/developers/webhooks'
-    | '/settings/audit-log'
+    | '/settings/organization'
     | '/settings/team'
     | '/api/auth/$'
     | '/settings'
@@ -168,12 +189,14 @@ export interface FileRouteTypes {
     | '/_authed'
     | '/login'
     | '/no-org'
+    | '/_authed/audit-log'
     | '/_authed/dashboard'
+    | '/_authed/settings'
     | '/accept-invitation/$id'
     | '/_authed/developers/api-keys'
     | '/_authed/developers/jobs'
     | '/_authed/developers/webhooks'
-    | '/_authed/settings/audit-log'
+    | '/_authed/settings/organization'
     | '/_authed/settings/team'
     | '/api/auth/$'
     | '/_authed/settings/'
@@ -225,6 +248,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AcceptInvitationIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authed/settings': {
+      id: '/_authed/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthedSettingsRouteImport
+      parentRoute: typeof AuthedRoute
+    }
     '/_authed/dashboard': {
       id: '/_authed/dashboard'
       path: '/dashboard'
@@ -232,12 +262,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedDashboardRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/audit-log': {
+      id: '/_authed/audit-log'
+      path: '/audit-log'
+      fullPath: '/audit-log'
+      preLoaderRoute: typeof AuthedAuditLogRouteImport
+      parentRoute: typeof AuthedRoute
+    }
     '/_authed/settings/': {
       id: '/_authed/settings/'
-      path: '/settings'
+      path: '/'
       fullPath: '/settings/'
       preLoaderRoute: typeof AuthedSettingsIndexRouteImport
-      parentRoute: typeof AuthedRoute
+      parentRoute: typeof AuthedSettingsRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -248,17 +285,17 @@ declare module '@tanstack/react-router' {
     }
     '/_authed/settings/team': {
       id: '/_authed/settings/team'
-      path: '/settings/team'
+      path: '/team'
       fullPath: '/settings/team'
       preLoaderRoute: typeof AuthedSettingsTeamRouteImport
-      parentRoute: typeof AuthedRoute
+      parentRoute: typeof AuthedSettingsRoute
     }
-    '/_authed/settings/audit-log': {
-      id: '/_authed/settings/audit-log'
-      path: '/settings/audit-log'
-      fullPath: '/settings/audit-log'
-      preLoaderRoute: typeof AuthedSettingsAuditLogRouteImport
-      parentRoute: typeof AuthedRoute
+    '/_authed/settings/organization': {
+      id: '/_authed/settings/organization'
+      path: '/organization'
+      fullPath: '/settings/organization'
+      preLoaderRoute: typeof AuthedSettingsOrganizationRouteImport
+      parentRoute: typeof AuthedSettingsRoute
     }
     '/_authed/developers/webhooks': {
       id: '/_authed/developers/webhooks'
@@ -284,24 +321,38 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface AuthedRouteChildren {
-  AuthedDashboardRoute: typeof AuthedDashboardRoute
-  AuthedDevelopersApiKeysRoute: typeof AuthedDevelopersApiKeysRoute
-  AuthedDevelopersJobsRoute: typeof AuthedDevelopersJobsRoute
-  AuthedDevelopersWebhooksRoute: typeof AuthedDevelopersWebhooksRoute
-  AuthedSettingsAuditLogRoute: typeof AuthedSettingsAuditLogRoute
+interface AuthedSettingsRouteChildren {
+  AuthedSettingsOrganizationRoute: typeof AuthedSettingsOrganizationRoute
   AuthedSettingsTeamRoute: typeof AuthedSettingsTeamRoute
   AuthedSettingsIndexRoute: typeof AuthedSettingsIndexRoute
 }
 
+const AuthedSettingsRouteChildren: AuthedSettingsRouteChildren = {
+  AuthedSettingsOrganizationRoute: AuthedSettingsOrganizationRoute,
+  AuthedSettingsTeamRoute: AuthedSettingsTeamRoute,
+  AuthedSettingsIndexRoute: AuthedSettingsIndexRoute,
+}
+
+const AuthedSettingsRouteWithChildren = AuthedSettingsRoute._addFileChildren(
+  AuthedSettingsRouteChildren,
+)
+
+interface AuthedRouteChildren {
+  AuthedAuditLogRoute: typeof AuthedAuditLogRoute
+  AuthedDashboardRoute: typeof AuthedDashboardRoute
+  AuthedSettingsRoute: typeof AuthedSettingsRouteWithChildren
+  AuthedDevelopersApiKeysRoute: typeof AuthedDevelopersApiKeysRoute
+  AuthedDevelopersJobsRoute: typeof AuthedDevelopersJobsRoute
+  AuthedDevelopersWebhooksRoute: typeof AuthedDevelopersWebhooksRoute
+}
+
 const AuthedRouteChildren: AuthedRouteChildren = {
+  AuthedAuditLogRoute: AuthedAuditLogRoute,
   AuthedDashboardRoute: AuthedDashboardRoute,
+  AuthedSettingsRoute: AuthedSettingsRouteWithChildren,
   AuthedDevelopersApiKeysRoute: AuthedDevelopersApiKeysRoute,
   AuthedDevelopersJobsRoute: AuthedDevelopersJobsRoute,
   AuthedDevelopersWebhooksRoute: AuthedDevelopersWebhooksRoute,
-  AuthedSettingsAuditLogRoute: AuthedSettingsAuditLogRoute,
-  AuthedSettingsTeamRoute: AuthedSettingsTeamRoute,
-  AuthedSettingsIndexRoute: AuthedSettingsIndexRoute,
 }
 
 const AuthedRouteWithChildren =

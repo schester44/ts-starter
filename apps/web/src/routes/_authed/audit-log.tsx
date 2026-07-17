@@ -30,7 +30,7 @@ const searchSchema = z.object({
   action: z.enum(AuditLogActionType).optional(),
 });
 
-export const Route = createFileRoute("/_authed/settings/audit-log")({
+export const Route = createFileRoute("/_authed/audit-log")({
   validateSearch: searchSchema,
   head: () => ({ meta: [{ title: title("Audit Log") }] }),
   loaderDeps: ({ search }) => search,
@@ -68,7 +68,7 @@ function AuditLogPage() {
 
   const handleActionFilter = (value: string) => {
     navigate({
-      to: "/settings/audit-log",
+      to: "/audit-log",
       search: {
         action:
           value === "all"
@@ -188,7 +188,7 @@ function AuditLogPage() {
 
         {data && data.total > 0 && (
           <TablePagination
-            to="/settings/audit-log"
+            to="/audit-log"
             currentOffset={data.offset}
             limit={data.limit}
             total={data.total}

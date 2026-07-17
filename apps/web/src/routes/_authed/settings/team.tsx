@@ -149,11 +149,11 @@ function TeamPage() {
   };
 
   return (
-    <div className="p-4 md:p-6 xl:p-12 space-y-6">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Team Members</h1>
-          <p className="text-muted-foreground">
+          <h2 className="text-lg font-semibold text-foreground">Team Members</h2>
+          <p className="text-sm text-muted-foreground">
             Manage your team members and their access
           </p>
         </div>
