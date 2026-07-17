@@ -21,6 +21,7 @@
     "better-auth": "^1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2",
+    "date-fns": "^4.4.0",
     "lucide-react": "^1.16.0",
     "nitro": "^3.0.0-alpha",
     "radix-ui": "^1.4.3",

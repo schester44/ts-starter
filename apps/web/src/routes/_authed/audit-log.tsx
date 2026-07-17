@@ -1,12 +1,18 @@
+import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  AuditLogActionType,
+  AuditLogActorType,
+  AuditLogEntityType,
+} from "@__APP_NAME__/db/generated/prisma/enums";
+import type {
+  AuditLogActionType as AuditLogActionTypeEnum,
+  AuditLogActorType as AuditLogActorTypeEnum,
+  AuditLogEntityType as AuditLogEntityTypeEnum,
+} from "@__APP_NAME__/db/generated/prisma/enums";
+import { getAuditLog } from "@/entities/audit-log/actions/get-audit-log-action";
+import { AuditLogTable } from "@/components/audit-log-table";
+import { TablePagination } from "@/components/table-pagination";
 import {
   Select,
   SelectContent,
@@ -14,221 +20,329 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { TablePagination } from "@/components/table-pagination";
-import { getAuditLog } from "@/entities/audit-log/actions/get-audit-log-action";
-import { formatDateTime, toHumanReadable } from "@/lib/formatting";
+import { Input } from "@/components/ui/input";
+import { Search, X } from "lucide-react";
 import { title } from "@/lib/meta";
-import type { AuditLogActionType as AuditLogActionTypeEnum } from "@__APP_NAME__/db/generated/prisma/enums";
-import { AuditLogActionType } from "@__APP_NAME__/db/generated/prisma/enums";
-import { useNavigate } from "@tanstack/react-router";
-import { ClipboardList, User, Bot, Key } from "lucide-react";
+import { toHumanReadable } from "@/lib/formatting";
 import z from "zod";
 
-const searchSchema = z.object({
-  offset: z.number().int().min(0).optional(),
+const auditLogSearchSchema = z.object({
+  limit: z.coerce.number().min(1).max(100).optional().catch(50),
+  offset: z.coerce.number().min(0).optional().catch(0),
+  entityType: z.enum(AuditLogEntityType).optional(),
   action: z.enum(AuditLogActionType).optional(),
+  actorType: z.enum(AuditLogActorType).optional(),
+  entityId: z.string().optional(),
+  actorId: z.string().optional(),
+  actorName: z.string().optional(),
 });
 
 export const Route = createFileRoute("/_authed/audit-log")({
-  validateSearch: searchSchema,
-  head: () => ({ meta: [{ title: title("Audit Log") }] }),
-  loaderDeps: ({ search }) => search,
-  loader: ({ deps }) =>
-    getAuditLog({
-      data: {
-        offset: deps.offset ?? 0,
-        limit: 25,
-        action: deps.action,
-      },
-    }),
+  validateSearch: auditLogSearchSchema,
+  loaderDeps: ({ search }) => ({
+    offset: search.offset,
+    limit: search.limit,
+    entityType: search.entityType,
+    action: search.action,
+    actorType: search.actorType,
+    entityId: search.entityId,
+    actorId: search.actorId,
+  }),
+  loader: ({ deps }) => getAuditLog({ data: deps }),
+  head: () => ({
+    meta: [{ title: title("Audit Log") }],
+  }),
   component: AuditLogPage,
 });
 
-const actorTypeIcons = {
-  USER: User,
-  SYSTEM: Bot,
-  API_KEY: Key,
-} as const;
-
-const actionColors: Partial<
-  Record<string, "default" | "secondary" | "destructive" | "outline">
-> = {
-  MEMBER_INVITED: "default",
-  MEMBER_REMOVED: "destructive",
-  MEMBER_ROLE_UPDATED: "secondary",
-  INVITATION_CANCELLED: "outline",
-  SETTINGS_UPDATED: "secondary",
-};
-
 function AuditLogPage() {
+  const navigate = Route.useNavigate();
+  const { entityType, action, actorType, entityId, actorId, actorName } =
+    Route.useSearch();
   const data = Route.useLoaderData();
-  const search = Route.useSearch();
-  const navigate = useNavigate();
+  const [entityIdInput, setEntityIdInput] = React.useState(entityId || "");
 
-  const handleActionFilter = (value: string) => {
+  React.useEffect(() => {
+    setEntityIdInput(entityId || "");
+  }, [entityId]);
+
+  React.useEffect(() => {
+    const trimmedInput = entityIdInput.trim();
+    const currentEntityId = entityId || "";
+
+    if (trimmedInput === currentEntityId) return;
+
+    const timeoutId = setTimeout(() => {
+      navigate({
+        to: "/audit-log",
+        search: (prev) => ({
+          ...prev,
+          entityId: trimmedInput || undefined,
+          offset: 0,
+        }),
+      });
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [entityIdInput, entityId, navigate]);
+
+  const hasActiveFilters =
+    !!(entityType || action || actorType || entityId) || !!actorId;
+
+  const activeFilterCount = [
+    entityType,
+    action,
+    actorType,
+    entityId,
+    actorId,
+  ].filter(Boolean).length;
+
+  const clearAllFilters = () => {
     navigate({
       to: "/audit-log",
-      search: {
-        action:
-          value === "all"
-            ? undefined
-            : (value as AuditLogActionTypeEnum),
-        offset: undefined,
-      },
+      search: { limit: 50, offset: 0 },
     });
   };
+
+  const clearFilter = (
+    filterName:
+      | "entityType"
+      | "action"
+      | "actorType"
+      | "entityId"
+      | "actorId",
+  ) => {
+    navigate({
+      to: "/audit-log",
+      search: (prev) => ({
+        ...prev,
+        [filterName]: undefined,
+        ...(filterName === "actorId" ? { actorName: undefined } : {}),
+        offset: 0,
+      }),
+    });
+  };
+
+  const shortId = (id: string) => (id.length > 8 ? id.slice(0, 8) : id);
 
   return (
     <div className="p-4 md:p-6 xl:p-12 space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Audit Log</h1>
-          <p className="text-muted-foreground">
-            Track all actions performed in your organization
-          </p>
-        </div>
+        <h1 className="text-3xl font-bold">Audit Log</h1>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-4">
+        {/* Entity Type Filter */}
         <Select
-          value={search.action ?? "all"}
-          onValueChange={handleActionFilter}
+          value={entityType || "all"}
+          onValueChange={(value) => {
+            navigate({
+              to: "/audit-log",
+              search: (prev) => ({
+                ...prev,
+                entityType:
+                  value === "all"
+                    ? undefined
+                    : (value as AuditLogEntityTypeEnum),
+                offset: 0,
+              }),
+            });
+          }}
         >
-          <SelectTrigger className="w-[220px]">
-            <SelectValue placeholder="Filter by action" />
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="All Entities" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All actions</SelectItem>
-            {Object.values(AuditLogActionType).map((action) => (
-              <SelectItem key={action} value={action}>
-                {toHumanReadable(action)}
+            <SelectItem value="all">All Entities</SelectItem>
+            {Object.values(AuditLogEntityType).map((type) => (
+              <SelectItem key={type} value={type}>
+                {toHumanReadable(type)}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
+
+        {/* Action Type Filter */}
+        <Select
+          value={action || "all"}
+          onValueChange={(value) => {
+            navigate({
+              to: "/audit-log",
+              search: (prev) => ({
+                ...prev,
+                action:
+                  value === "all"
+                    ? undefined
+                    : (value as AuditLogActionTypeEnum),
+                offset: 0,
+              }),
+            });
+          }}
+        >
+          <SelectTrigger className="w-[200px]">
+            <SelectValue placeholder="All Actions" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Actions</SelectItem>
+            {Object.values(AuditLogActionType).map((type) => (
+              <SelectItem key={type} value={type}>
+                {toHumanReadable(type)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        {/* Actor Type Filter */}
+        <Select
+          value={actorType || "all"}
+          onValueChange={(value) => {
+            navigate({
+              to: "/audit-log",
+              search: (prev) => ({
+                ...prev,
+                actorType:
+                  value === "all"
+                    ? undefined
+                    : (value as AuditLogActorTypeEnum),
+                offset: 0,
+              }),
+            });
+          }}
+        >
+          <SelectTrigger className="w-[160px]">
+            <SelectValue placeholder="All Actors" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Actors</SelectItem>
+            {Object.values(AuditLogActorType).map((type) => (
+              <SelectItem key={type} value={type}>
+                {toHumanReadable(type)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        {/* Entity ID Search */}
+        <div className="relative">
+          <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            type="text"
+            placeholder="Search by Entity ID"
+            value={entityIdInput}
+            onChange={(e) => setEntityIdInput(e.target.value)}
+            className="w-[220px] pl-9"
+          />
+        </div>
+
+        {/* Clear Filters */}
+        {hasActiveFilters && (
+          <Button variant="ghost" onClick={clearAllFilters} className="gap-2">
+            Clear All
+            {activeFilterCount > 0 && (
+              <Badge variant="secondary" className="rounded-full px-2">
+                {activeFilterCount}
+              </Badge>
+            )}
+          </Button>
+        )}
       </div>
 
-      <div className="border rounded-lg bg-card">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="pl-4 py-4">Action</TableHead>
-              <TableHead>Actor</TableHead>
-              <TableHead>Details</TableHead>
-              <TableHead>Date</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {!data || data.items.length === 0 ? (
-              <TableRow>
-                <TableCell
-                  colSpan={4}
-                  className="text-center py-12 text-muted-foreground"
-                >
-                  <div className="flex flex-col items-center gap-2">
-                    <ClipboardList className="h-8 w-8" />
-                    <span>No audit log entries found</span>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ) : (
-              data.items.map(
-                (entry: {
-                  id: string;
-                  action: string;
-                  actorType: string;
-                  actorName: string | null;
-                  entityType: string;
-                  metadata: unknown;
-                  occurredAt: string | Date;
-                }) => {
-                  const ActorIcon =
-                    actorTypeIcons[
-                      entry.actorType as keyof typeof actorTypeIcons
-                    ] ?? User;
+      {/* Active Filter Badges */}
+      {hasActiveFilters && (
+        <div className="flex flex-wrap gap-2">
+          {actorId && (
+            <Badge variant="secondary" className="gap-2">
+              Actor: {actorName || shortId(actorId)}
+              <button
+                onClick={() => clearFilter("actorId")}
+                className="hover:text-foreground"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </Badge>
+          )}
 
-                  return (
-                    <TableRow key={entry.id}>
-                      <TableCell className="pl-4 py-4">
-                        <Badge
-                          variant={actionColors[entry.action] ?? "secondary"}
-                        >
-                          {toHumanReadable(entry.action)}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <ActorIcon className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm">
-                            {entry.actorName ??
-                              toHumanReadable(entry.actorType)}
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <MetadataSummary
-                          action={entry.action}
-                          metadata={
-                            entry.metadata as Record<string, unknown> | null
-                          }
-                          entityType={entry.entityType}
-                        />
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
-                        {formatDateTime(new Date(entry.occurredAt))}
-                      </TableCell>
-                    </TableRow>
-                  );
-                },
-              )
+          {entityId && (
+            <Badge variant="secondary" className="gap-2">
+              Entity: {shortId(entityId)}
+              <button
+                onClick={() => clearFilter("entityId")}
+                className="hover:text-foreground"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </Badge>
+          )}
+
+          {entityType && (
+            <Badge variant="secondary" className="gap-2">
+              {toHumanReadable(entityType)}
+              <button
+                onClick={() => clearFilter("entityType")}
+                className="hover:text-foreground"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </Badge>
+          )}
+
+          {action && (
+            <Badge variant="secondary" className="gap-2">
+              {toHumanReadable(action)}
+              <button
+                onClick={() => clearFilter("action")}
+                className="hover:text-foreground"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </Badge>
+          )}
+
+          {actorType && (
+            <Badge variant="secondary" className="gap-2">
+              {toHumanReadable(actorType)}
+              <button
+                onClick={() => clearFilter("actorType")}
+                className="hover:text-foreground"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </Badge>
+          )}
+        </div>
+      )}
+
+      <div className="border-2 rounded-lg bg-card">
+        {data && (
+          <>
+            <AuditLogTable
+              auditLogs={data.items}
+              onActorClick={(id, name) => {
+                navigate({
+                  to: "/audit-log",
+                  search: {
+                    actorId: id,
+                    actorName: name,
+                    offset: 0,
+                  },
+                });
+              }}
+            />
+
+            {data.pagination.total > 0 && (
+              <TablePagination
+                to="/audit-log"
+                currentOffset={data.pagination.offset}
+                limit={data.pagination.limit}
+                total={data.pagination.total}
+                hasMore={data.pagination.has_more}
+              />
             )}
-          </TableBody>
-        </Table>
-
-        {data && data.total > 0 && (
-          <TablePagination
-            to="/audit-log"
-            currentOffset={data.offset}
-            limit={data.limit}
-            total={data.total}
-            hasMore={data.hasMore}
-          />
+          </>
         )}
       </div>
     </div>
   );
-}
-
-function MetadataSummary({
-  action,
-  metadata,
-  entityType,
-}: {
-  action: string;
-  metadata: Record<string, unknown> | null;
-  entityType: string;
-}) {
-  if (!metadata) {
-    return (
-      <span className="text-sm text-muted-foreground">
-        {toHumanReadable(entityType)}
-      </span>
-    );
-  }
-
-  const parts: string[] = [];
-
-  if (metadata.email) parts.push(String(metadata.email));
-  if (metadata.role) parts.push(`role: ${metadata.role}`);
-
-  if (parts.length === 0) {
-    return (
-      <span className="text-sm text-muted-foreground">
-        {toHumanReadable(entityType)}
-      </span>
-    );
-  }
-
-  return <span className="text-sm text-muted-foreground">{parts.join(" · ")}</span>;
 }
