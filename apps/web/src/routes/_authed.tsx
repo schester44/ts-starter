@@ -25,7 +25,11 @@ function AuthedLayout() {
 
   return (
     <SidebarProvider>
-      <AppSidebar user={session.user} organization={session.organization} />
+      <AppSidebar
+        user={session.user}
+        organization={session.organization}
+        organizations={session.organizations}
+      />
       <SidebarInset>
         <Outlet />
       </SidebarInset>

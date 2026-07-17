@@ -35,6 +35,7 @@ export const fetchSession = createServerFn({ method: "GET" }).handler(
       },
       session: session.session,
       organization: organization ?? null,
+      organizations: memberships.map((m) => m.organization),
     };
   },
 );

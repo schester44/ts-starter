@@ -39,25 +39,35 @@ import { PermissionGate } from "./permission-gate";
 import { UserMenu } from "./user-menu";
 import { OrgSwitcher } from "./org-switcher";
 
+interface Organization {
+  id: string;
+  name: string;
+  slug?: string | null;
+  logo?: string | null;
+}
+
 interface AppSidebarProps {
   user: {
     name: string;
     email: string;
     image?: string | null;
   };
-  organization: {
-    id: string;
-    name: string;
-    slug?: string | null;
-    logo?: string | null;
-  } | null;
+  organization: Organization | null;
+  organizations: Organization[];
 }
 
-export function AppSidebar({ user, organization }: AppSidebarProps) {
+export function AppSidebar({
+  user,
+  organization,
+  organizations,
+}: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <OrgSwitcher organization={organization} />
+        <OrgSwitcher
+          organization={organization}
+          organizations={organizations}
+        />
       </SidebarHeader>
 
       <SidebarContent>
