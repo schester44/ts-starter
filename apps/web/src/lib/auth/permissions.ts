@@ -28,6 +28,7 @@ export const admin = ac.newRole({
 
 export const member = ac.newRole({
   ...defaultStatements,
+  organization: ["update"],
   // Add member permissions for your resources here, e.g.:
   // post: ["create", "update"],
 });

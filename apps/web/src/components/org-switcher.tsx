@@ -23,10 +23,12 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "./ui/sidebar";
-import { Building2, ChevronsUpDown, Check, Plus } from "lucide-react";
+import { Building2, ChevronsUpDown, Check, Plus, Trash2 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import { usePermission } from "@/hooks/use-permission";
 import { useRouter } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface Organization {
   id: string;
@@ -47,6 +49,12 @@ export function OrgSwitcher({ organization, organizations }: OrgSwitcherProps) {
   const [newOrgName, setNewOrgName] = useState("");
   const [newOrgSlug, setNewOrgSlug] = useState("");
   const [isCreating, setIsCreating] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteConfirmName, setDeleteConfirmName] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { hasPermission } = usePermission();
+
+  const canDeleteOrg = hasPermission("organization", "delete");
 
   const handleSwitchOrg = async (orgId: string) => {
     if (orgId === organization?.id) return;
@@ -143,10 +151,100 @@ export function OrgSwitcher({ organization, organizations }: OrgSwitcherProps) {
                 <Plus className="mr-2 h-4 w-4" />
                 Create Organization
               </DropdownMenuItem>
+              {canDeleteOrg && organization && (
+                <DropdownMenuItem
+                  onClick={() => setDeleteOpen(true)}
+                  className="cursor-pointer text-destructive focus:text-destructive"
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete Organization
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </SidebarMenuItem>
       </SidebarMenu>
+
+      <Dialog
+        open={deleteOpen}
+        onOpenChange={(open) => {
+          setDeleteOpen(open);
+          if (!open) setDeleteConfirmName("");
+        }}
+      >
+        <DialogContent>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              if (!organization || deleteConfirmName !== organization.name)
+                return;
+
+              setIsDeleting(true);
+              try {
+                await authClient.organization.delete({
+                  organizationId: organization.id,
+                });
+
+                setDeleteOpen(false);
+                setDeleteConfirmName("");
+                router.invalidate();
+              } catch (error) {
+                toast.error(
+                  `Failed to delete organization. ${
+                    error instanceof Error ? error.message : String(error)
+                  }`,
+                );
+              } finally {
+                setIsDeleting(false);
+              }
+            }}
+          >
+            <DialogHeader>
+              <DialogTitle>Delete Organization</DialogTitle>
+              <DialogDescription>
+                This action is permanent and cannot be undone. All data
+                associated with{" "}
+                <span className="font-semibold text-foreground">
+                  {organization?.name}
+                </span>{" "}
+                will be permanently deleted.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-2 py-4">
+              <Label htmlFor="delete-confirm">
+                Type{" "}
+                <span className="font-semibold">{organization?.name}</span> to
+                confirm
+              </Label>
+              <Input
+                id="delete-confirm"
+                placeholder={organization?.name ?? ""}
+                value={deleteConfirmName}
+                onChange={(e) => setDeleteConfirmName(e.target.value)}
+                autoFocus
+              />
+            </div>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setDeleteOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                variant="destructive"
+                disabled={
+                  deleteConfirmName !== organization?.name || isDeleting
+                }
+              >
+                {isDeleting ? "Deleting..." : "Delete Organization"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={createOpen} onOpenChange={setCreateOpen}>
         <DialogContent>

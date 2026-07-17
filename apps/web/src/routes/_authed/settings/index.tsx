@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Shield, ClipboardList } from "lucide-react";
+import { Shield } from "lucide-react";
 
 export const Route = createFileRoute("/_authed/settings/")({
   component: SettingsPage,
@@ -31,21 +31,7 @@ function SettingsPage() {
             </div>
           </div>
         </Link>
-        <Link to="/settings/audit-log">
-          <div className="cursor-pointer rounded-lg border bg-card p-6 hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <ClipboardList className="h-6 w-6 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold">Audit Log</h3>
-                <p className="text-sm text-muted-foreground">
-                  Track all actions performed in your organization
-                </p>
-              </div>
-            </div>
-          </div>
-        </Link>
+
       </div>
     </div>
   );
