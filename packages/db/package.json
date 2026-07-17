@@ -22,7 +22,7 @@
   "scripts": {
     "generate": "prisma generate",
     "migrate": "prisma migrate",
-    "reset": "prisma migrate reset --force",
+    "reset": "prisma migrate reset --force && yarn seed",
     "seed": "prisma db seed",
     "data-migrate": "tsx ./src/data-migrations/runner.ts"
   },
