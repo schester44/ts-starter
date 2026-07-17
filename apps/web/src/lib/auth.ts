@@ -39,6 +39,7 @@ const options = {
         member,
       },
       allowUserToCreateOrganization: true,
+      creatorRole: "admin",
     }),
   ],
 };
