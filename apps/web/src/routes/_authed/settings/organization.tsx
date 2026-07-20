@@ -34,9 +34,23 @@ function OrganizationPage() {
 
     setIsDeleting(true);
     try {
+      const deletedOrgId = session.organization.id;
+
       await authClient.organization.delete({
-        organizationId: session.organization.id,
+        organizationId: deletedOrgId,
       });
+
+      // Better Auth sets activeOrganizationId to null on delete.
+      // Switch to another org if one exists.
+      const remainingOrgs = session.organizations.filter(
+        (org) => org.id !== deletedOrgId,
+      );
+
+      if (remainingOrgs.length > 0) {
+        await authClient.organization.setActive({
+          organizationId: remainingOrgs[0].id,
+        });
+      }
 
       setDeleteOpen(false);
       setDeleteConfirmName("");
