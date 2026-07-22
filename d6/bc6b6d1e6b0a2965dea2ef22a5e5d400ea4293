@@ -1,0 +1,29 @@
+apps/web/src/routes/api/example/index.ts
+  s_46f8e767321219::t_30a93332144915 1-18
+apps/web/src/middleware/api-key-auth.ts
+  s_a79d3edb1949e6::t_93ccfe3cfbf414 1-72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "d6bc6b6d1e6b0a2965dea2ef22a5e5d400ea4293",
+  "prompts": {},
+  "sessions": {
+    "s_46f8e767321219": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f8bd1-58df-798c-8a2d-33ca59b22883",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    },
+    "s_a79d3edb1949e6": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f8b50-cff0-7db4-83d0-9370ad63b5ea",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    }
+  }
+}
