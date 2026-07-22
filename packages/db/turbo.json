@@ -3,7 +3,8 @@
   "extends": ["//"],
   "tasks": {
     "generate": {
-      "outputs": ["src/generated/**"],
+      "dependsOn": ["@__APP_NAME__/prisma-dbml-generator#build"],
+      "outputs": ["src/generated/**", "./src/prisma/dbml/**"],
       "passThroughEnv": ["DATABASE_URL"]
     },
     "reset": {

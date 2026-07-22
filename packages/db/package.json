@@ -31,6 +31,7 @@
     "@prisma/client": "^7"
   },
   "devDependencies": {
+    "@__APP_NAME__/prisma-dbml-generator": "workspace:*",
     "dotenv": "^16",
     "prisma": "^7",
     "tsx": "^4",

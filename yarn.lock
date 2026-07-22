@@ -48,6 +48,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@__APP_NAME__/db@workspace:packages/db"
   dependencies:
+    "@__APP_NAME__/prisma-dbml-generator": "workspace:*"
     "@prisma/adapter-pg": "npm:^7.8.0"
     "@prisma/client": "npm:^7"
     dotenv: "npm:^16"
@@ -72,6 +73,20 @@ __metadata:
     pino: "npm:^9"
     pino-pretty: "npm:^13"
     typescript: "npm:^5"
+  languageName: unknown
+  linkType: soft
+
+"@__APP_NAME__/prisma-dbml-generator@workspace:*, @__APP_NAME__/prisma-dbml-generator@workspace:packages/prisma-dbml-generator":
+  version: 0.0.0-use.local
+  resolution: "@__APP_NAME__/prisma-dbml-generator@workspace:packages/prisma-dbml-generator"
+  dependencies:
+    "@prisma/generator-helper": "npm:^7.0.1"
+    "@prisma/internals": "npm:^7.0.1"
+    tsup: "npm:^8.5.0"
+    typescript: "npm:^5.9.2"
+    vitest: "npm:^3.2.4"
+  bin:
+    prisma-dbml-generator: ./dist/generator.cjs
   languageName: unknown
   linkType: soft
 
@@ -3196,6 +3211,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@prisma/dmmf@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@prisma/dmmf@npm:7.8.0"
+  checksum: 10c0/b2565c9405891cde59544af591337a9e0995e3e891d4b7dade840b19be15e1122cf6e8f4c28e776caec3fd9ef2e02f7be65b77b990513c47a869fcb5e41293b4
+  languageName: node
+  linkType: hard
+
 "@prisma/driver-adapter-utils@npm:7.8.0":
   version: 7.8.0
   resolution: "@prisma/driver-adapter-utils@npm:7.8.0"
@@ -3235,6 +3257,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@prisma/generator-helper@npm:7.8.0, @prisma/generator-helper@npm:^7.0.1":
+  version: 7.8.0
+  resolution: "@prisma/generator-helper@npm:7.8.0"
+  dependencies:
+    "@prisma/debug": "npm:7.8.0"
+    "@prisma/dmmf": "npm:7.8.0"
+    "@prisma/generator": "npm:7.8.0"
+  checksum: 10c0/72163ab694715e1bc65de04ff734459942ebca07a7094d5a5615a25a31d8f060eb639e11be29142826accef0d296188cf785fd0c7eb40e1e18213c64fa0130fe
+  languageName: node
+  linkType: hard
+
+"@prisma/generator@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@prisma/generator@npm:7.8.0"
+  checksum: 10c0/4e85e1555175097b7205667c778d4c669b79b31b08eefacfad687da576e2497cbf9e1a7ac94ed2f8a5a3e1c6a9ca7c39f7e87ef6ee3b8404875f16864fddc94a
+  languageName: node
+  linkType: hard
+
+"@prisma/get-dmmf@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@prisma/get-dmmf@npm:7.8.0"
+  dependencies:
+    "@prisma/debug": "npm:7.8.0"
+    "@prisma/dmmf": "npm:7.8.0"
+    "@prisma/prisma-schema-wasm": "npm:7.8.0-6.3c6e192761c0362d496ed980de936e2f3cebcd3a"
+    "@streamparser/json": "npm:0.0.22"
+    pluralize: "npm:8.0.0"
+  checksum: 10c0/77940797ef3306bed0dce0037b03945ab7b05fbf65c9fc9ab6634e693ea8abfdcdfc16bd680c8cdfb6c016c8d8b3691716565d9add24b05c6b1208c6c7589fa0
+  languageName: node
+  linkType: hard
+
 "@prisma/get-platform@npm:7.2.0":
   version: 7.2.0
   resolution: "@prisma/get-platform@npm:7.2.0"
@@ -3253,10 +3306,63 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@prisma/internals@npm:^7.0.1":
+  version: 7.8.0
+  resolution: "@prisma/internals@npm:7.8.0"
+  dependencies:
+    "@prisma/config": "npm:7.8.0"
+    "@prisma/debug": "npm:7.8.0"
+    "@prisma/dmmf": "npm:7.8.0"
+    "@prisma/driver-adapter-utils": "npm:7.8.0"
+    "@prisma/engines": "npm:7.8.0"
+    "@prisma/fetch-engine": "npm:7.8.0"
+    "@prisma/generator": "npm:7.8.0"
+    "@prisma/generator-helper": "npm:7.8.0"
+    "@prisma/get-dmmf": "npm:7.8.0"
+    "@prisma/get-platform": "npm:7.8.0"
+    "@prisma/prisma-schema-wasm": "npm:7.8.0-6.3c6e192761c0362d496ed980de936e2f3cebcd3a"
+    "@prisma/schema-engine-wasm": "npm:7.8.0-6.3c6e192761c0362d496ed980de936e2f3cebcd3a"
+    "@prisma/schema-files-loader": "npm:7.8.0"
+    "@streamparser/json": "npm:0.0.22"
+    arg: "npm:5.0.2"
+    prompts: "npm:2.4.2"
+  peerDependencies:
+    typescript: ">=5.4.0"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/fac44cbe1e9b1798016918a8b71d4ae7cc3a50209b3d310de21d730d66d5d08643d19962badbb4a16e462efd9881111cdc4ff32367a63b7ea4369e407e95bcdb
+  languageName: node
+  linkType: hard
+
+"@prisma/prisma-schema-wasm@npm:7.8.0-6.3c6e192761c0362d496ed980de936e2f3cebcd3a":
+  version: 7.8.0-6.3c6e192761c0362d496ed980de936e2f3cebcd3a
+  resolution: "@prisma/prisma-schema-wasm@npm:7.8.0-6.3c6e192761c0362d496ed980de936e2f3cebcd3a"
+  checksum: 10c0/20b99be40e0b646f38299c3975803ac4a731fc57c47e9444e930583d18a8e45adb8bf3dfba9b97121ff66e14033566580ad85dcf91a9ba03bd64b30219f0271a
+  languageName: node
+  linkType: hard
+
 "@prisma/query-plan-executor@npm:7.2.0":
   version: 7.2.0
   resolution: "@prisma/query-plan-executor@npm:7.2.0"
   checksum: 10c0/24b247c39609f205a20d5b6858af9b258dec876a6027eb28f8d1c91c2213e475a7312ada3002b1c3f79732347b0ec67bbd760bc114d79fdefe052786f503bb37
+  languageName: node
+  linkType: hard
+
+"@prisma/schema-engine-wasm@npm:7.8.0-6.3c6e192761c0362d496ed980de936e2f3cebcd3a":
+  version: 7.8.0-6.3c6e192761c0362d496ed980de936e2f3cebcd3a
+  resolution: "@prisma/schema-engine-wasm@npm:7.8.0-6.3c6e192761c0362d496ed980de936e2f3cebcd3a"
+  checksum: 10c0/a674e6e37f772cadb136ad4da4c47d0d4b2c71ab08fa2bbe8f3332c05a00cba10c78568df208677c4028510b37f654d77ad0e194856480db0fcd49aee4ae9d4d
+  languageName: node
+  linkType: hard
+
+"@prisma/schema-files-loader@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@prisma/schema-files-loader@npm:7.8.0"
+  dependencies:
+    "@prisma/prisma-schema-wasm": "npm:7.8.0-6.3c6e192761c0362d496ed980de936e2f3cebcd3a"
+    fs-extra: "npm:11.3.0"
+  checksum: 10c0/df19c937c2d5b5740537bd79e74c905e9ef88c3e163cafc0ec28911063df0ffd592c0dd11c09489e4ddb2df4bf438299bc184a613d30c0264c757f45554c1908
   languageName: node
   linkType: hard
 
@@ -5405,6 +5511,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@streamparser/json@npm:0.0.22":
+  version: 0.0.22
+  resolution: "@streamparser/json@npm:0.0.22"
+  checksum: 10c0/4496e286d607e37552c75e1e63ed7e722392d4d91939401ec11eb63c8c7d1fb7a2cf5733f1a60dc63ad95996f12d62f5639724b2c31584bb8ace51b1f3910ccc
+  languageName: node
+  linkType: hard
+
 "@stylistic/eslint-plugin@npm:^5":
   version: 5.10.0
   resolution: "@stylistic/eslint-plugin@npm:5.10.0"
@@ -6720,6 +6833,13 @@ __metadata:
     normalize-path: "npm:^3.0.0"
     picomatch: "npm:^2.0.4"
   checksum: 10c0/57b06ae984bc32a0d22592c87384cd88fe4511b1dd7581497831c56d41939c8a001b28e7b853e1450f2bf61992dfcaa8ae2d0d161a0a90c4fb631ef07098fbac
+  languageName: node
+  linkType: hard
+
+"arg@npm:5.0.2":
+  version: 5.0.2
+  resolution: "arg@npm:5.0.2"
+  checksum: 10c0/ccaf86f4e05d342af6666c569f844bec426595c567d32a8289715087825c2ca7edd8a3d204e4d2fb2aa4602e09a57d0c13ea8c9eea75aac3dbb4af5514e6800e
   languageName: node
   linkType: hard
 
@@ -8439,6 +8559,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fs-extra@npm:11.3.0":
+  version: 11.3.0
+  resolution: "fs-extra@npm:11.3.0"
+  dependencies:
+    graceful-fs: "npm:^4.2.0"
+    jsonfile: "npm:^6.0.1"
+    universalify: "npm:^2.0.0"
+  checksum: 10c0/5f95e996186ff45463059feb115a22fb048bdaf7e487ecee8a8646c78ed8fdca63630e3077d4c16ce677051f5e60d3355a06f3cd61f3ca43f48cc58822a44d0a
+  languageName: node
+  linkType: hard
+
 "fs-minipass@npm:^3.0.0":
   version: 3.0.3
   resolution: "fs-minipass@npm:3.0.3"
@@ -8610,7 +8741,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6":
+"graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6":
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: 10c0/386d011a553e02bc594ac2ca0bd6d9e4c22d7fa8cfbfc448a6d148c59ea881b092db9dbe3547ae4b88e55f1b01f7c4a2ecc53b310c042793e63aa44cf6c257f2
@@ -9067,12 +9198,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jsonfile@npm:^6.0.1":
+  version: 6.2.1
+  resolution: "jsonfile@npm:6.2.1"
+  dependencies:
+    graceful-fs: "npm:^4.1.6"
+    universalify: "npm:^2.0.0"
+  dependenciesMeta:
+    graceful-fs:
+      optional: true
+  checksum: 10c0/e1abf000ecee9942d4d028a8e02dc752617face227d72afd1cfb2187e2433079e625bf82b807a313689db71b6472c6b2b389a2340d2798737b1199a39631c28a
+  languageName: node
+  linkType: hard
+
 "keyv@npm:^4.5.4":
   version: 4.5.4
   resolution: "keyv@npm:4.5.4"
   dependencies:
     json-buffer: "npm:3.0.1"
   checksum: 10c0/aa52f3c5e18e16bb6324876bb8b59dd02acf782a4b789c7b2ae21107fab95fab3890ed448d4f8dba80ce05391eeac4bfabb4f02a20221342982f806fa2cf271e
+  languageName: node
+  linkType: hard
+
+"kleur@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "kleur@npm:3.0.3"
+  checksum: 10c0/cd3a0b8878e7d6d3799e54340efe3591ca787d9f95f109f28129bdd2915e37807bf8918bb295ab86afb8c82196beec5a1adcaf29042ce3f2bd932b038fe3aa4b
   languageName: node
   linkType: hard
 
@@ -10084,6 +10235,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pluralize@npm:8.0.0":
+  version: 8.0.0
+  resolution: "pluralize@npm:8.0.0"
+  checksum: 10c0/2044cfc34b2e8c88b73379ea4a36fc577db04f651c2909041b054c981cd863dd5373ebd030123ab058d194ae615d3a97cfdac653991e499d10caf592e8b3dc33
+  languageName: node
+  linkType: hard
+
 "postcss-load-config@npm:^6.0.1":
   version: 6.0.1
   resolution: "postcss-load-config@npm:6.0.1"
@@ -10233,6 +10391,16 @@ __metadata:
   version: 5.0.0
   resolution: "process-warning@npm:5.0.0"
   checksum: 10c0/941f48863d368ec161e0b5890ba0c6af94170078f3d6b5e915c19b36fb59edb0dc2f8e834d25e0d375a8bf368a49d490f080508842168832b93489d17843ec29
+  languageName: node
+  linkType: hard
+
+"prompts@npm:2.4.2":
+  version: 2.4.2
+  resolution: "prompts@npm:2.4.2"
+  dependencies:
+    kleur: "npm:^3.0.3"
+    sisteransi: "npm:^1.0.5"
+  checksum: 10c0/16f1ac2977b19fe2cf53f8411cc98db7a3c8b115c479b2ca5c82b5527cd937aa405fa04f9a5960abeb9daef53191b53b4d13e35c1f5d50e8718c76917c5f1ea4
   languageName: node
   linkType: hard
 
@@ -10985,6 +11153,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sisteransi@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "sisteransi@npm:1.0.5"
+  checksum: 10c0/230ac975cca485b7f6fe2b96a711aa62a6a26ead3e6fb8ba17c5a00d61b8bed0d7adc21f5626b70d7c33c62ff4e63933017a6462942c719d1980bb0b1207ad46
+  languageName: node
+  linkType: hard
+
 "smart-buffer@npm:^4.2.0":
   version: 4.2.0
   resolution: "smart-buffer@npm:4.2.0"
@@ -11395,7 +11570,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsup@npm:^8":
+"tsup@npm:^8, tsup@npm:^8.5.0":
   version: 8.5.1
   resolution: "tsup@npm:8.5.1"
   dependencies:
@@ -11607,6 +11782,13 @@ __metadata:
     pathe: "npm:^2.0.3"
     ufo: "npm:^1.6.1"
   checksum: 10c0/2fea6efed952314652f1c56c2bfcee1c1731a45409825ee8fd216f2781d289d8a98e4742b049fc33bbad888ca4b1a8f192297a7667cbcc0d97c04dfc12ade5a3
+  languageName: node
+  linkType: hard
+
+"universalify@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "universalify@npm:2.0.1"
+  checksum: 10c0/73e8ee3809041ca8b818efb141801a1004e3fc0002727f1531f4de613ea281b494a40909596dae4a042a4fb6cd385af5d4db2e137b1362e0e91384b828effd3a
   languageName: node
   linkType: hard
 
