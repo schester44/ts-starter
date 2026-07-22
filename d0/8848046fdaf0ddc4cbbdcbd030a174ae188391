@@ -1,0 +1,31 @@
+apps/web/src/lib/requests.ts
+  s_a79d3edb1949e6::t_3442bc0c38c2ea 1-167
+apps/web/src/routeTree.gen.ts
+  s_a79d3edb1949e6::t_38d832fc8eea0b 20,68-72,126,142,161,180,196,214,224,285-291,388
+apps/web/src/routes/api/example/index.ts
+  s_05f7ff85a85c25::t_14b3afbc035ba2 2,5-38,44-67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "d08848046fdaf0ddc4cbbdcbd030a174ae188391",
+  "prompts": {},
+  "sessions": {
+    "s_05f7ff85a85c25": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f8bd7-fb81-74d1-8362-abb5b7d078be",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    },
+    "s_a79d3edb1949e6": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f8b50-cff0-7db4-83d0-9370ad63b5ea",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    }
+  }
+}
