@@ -17,6 +17,7 @@ import { Route as AcceptInvitationIdRouteImport } from './routes/accept-invitati
 import { Route as AuthedSettingsRouteImport } from './routes/_authed/settings'
 import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
 import { Route as AuthedAuditLogRouteImport } from './routes/_authed/audit-log'
+import { Route as ApiExampleIndexRouteImport } from './routes/api/example/index'
 import { Route as AuthedSettingsIndexRouteImport } from './routes/_authed/settings/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthedSettingsTeamRouteImport } from './routes/_authed/settings/team'
@@ -63,6 +64,11 @@ const AuthedAuditLogRoute = AuthedAuditLogRouteImport.update({
   id: '/audit-log',
   path: '/audit-log',
   getParentRoute: () => AuthedRoute,
+} as any)
+const ApiExampleIndexRoute = ApiExampleIndexRouteImport.update({
+  id: '/api/example/',
+  path: '/api/example/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthedSettingsIndexRoute = AuthedSettingsIndexRouteImport.update({
   id: '/',
@@ -117,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings/': typeof AuthedSettingsIndexRoute
+  '/api/example/': typeof ApiExampleIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -132,6 +139,7 @@ export interface FileRoutesByTo {
   '/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings': typeof AuthedSettingsIndexRoute
+  '/api/example': typeof ApiExampleIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -150,6 +158,7 @@ export interface FileRoutesById {
   '/_authed/settings/team': typeof AuthedSettingsTeamRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_authed/settings/': typeof AuthedSettingsIndexRoute
+  '/api/example/': typeof ApiExampleIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/settings/team'
     | '/api/auth/$'
     | '/settings/'
+    | '/api/example/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -183,6 +193,7 @@ export interface FileRouteTypes {
     | '/settings/team'
     | '/api/auth/$'
     | '/settings'
+    | '/api/example'
   id:
     | '__root__'
     | '/'
@@ -200,6 +211,7 @@ export interface FileRouteTypes {
     | '/_authed/settings/team'
     | '/api/auth/$'
     | '/_authed/settings/'
+    | '/api/example/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -209,6 +221,7 @@ export interface RootRouteChildren {
   NoOrgRoute: typeof NoOrgRoute
   AcceptInvitationIdRoute: typeof AcceptInvitationIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiExampleIndexRoute: typeof ApiExampleIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -268,6 +281,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/audit-log'
       preLoaderRoute: typeof AuthedAuditLogRouteImport
       parentRoute: typeof AuthedRoute
+    }
+    '/api/example/': {
+      id: '/api/example/'
+      path: '/api/example'
+      fullPath: '/api/example/'
+      preLoaderRoute: typeof ApiExampleIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authed/settings/': {
       id: '/_authed/settings/'
@@ -365,6 +385,7 @@ const rootRouteChildren: RootRouteChildren = {
   NoOrgRoute: NoOrgRoute,
   AcceptInvitationIdRoute: AcceptInvitationIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiExampleIndexRoute: ApiExampleIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
