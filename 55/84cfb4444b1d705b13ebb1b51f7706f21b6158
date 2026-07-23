@@ -1,0 +1,29 @@
+apps/web/src/middleware/non-prod-only.ts
+  s_05f7ff85a85c25::t_531fae2b3fe69f 1-22
+apps/web/src/middleware/admin-api-key.ts
+  s_05f7ff85a85c25::t_501b41d4ddf096 1-37
+apps/web/src/routes/api/admin/-handlers/create-api-key-handler.ts
+  s_05f7ff85a85c25::t_39f9ffab94e040 1-80
+packages/db/src/prisma/schema.prisma
+  s_05f7ff85a85c25::t_e24b992eb96000 194
+apps/web/.env-example
+  s_05f7ff85a85c25::t_d406e021092808 14-19
+apps/web/src/routes/api/admin/create-api-key.ts
+  s_05f7ff85a85c25::t_4125457df5d683 1-17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "5584cfb4444b1d705b13ebb1b51f7706f21b6158",
+  "prompts": {},
+  "sessions": {
+    "s_05f7ff85a85c25": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f8bd7-fb81-74d1-8362-abb5b7d078be",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    }
+  }
+}
