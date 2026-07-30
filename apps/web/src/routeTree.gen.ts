@@ -20,6 +20,7 @@ import { Route as AuthedAuditLogRouteImport } from './routes/_authed/audit-log'
 import { Route as ApiExampleIndexRouteImport } from './routes/api/example/index'
 import { Route as AuthedSettingsIndexRouteImport } from './routes/_authed/settings/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiAdminCreateApiKeyRouteImport } from './routes/api/admin/create-api-key'
 import { Route as AuthedSettingsTeamRouteImport } from './routes/_authed/settings/team'
 import { Route as AuthedSettingsOrganizationRouteImport } from './routes/_authed/settings/organization'
 import { Route as AuthedDevelopersWebhooksRouteImport } from './routes/_authed/developers/webhooks'
@@ -80,6 +81,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminCreateApiKeyRoute = ApiAdminCreateApiKeyRouteImport.update({
+  id: '/api/admin/create-api-key',
+  path: '/api/admin/create-api-key',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthedSettingsTeamRoute = AuthedSettingsTeamRouteImport.update({
   id: '/team',
   path: '/team',
@@ -121,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
   '/settings/organization': typeof AuthedSettingsOrganizationRoute
   '/settings/team': typeof AuthedSettingsTeamRoute
+  '/api/admin/create-api-key': typeof ApiAdminCreateApiKeyRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings/': typeof AuthedSettingsIndexRoute
   '/api/example/': typeof ApiExampleIndexRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
   '/settings/organization': typeof AuthedSettingsOrganizationRoute
   '/settings/team': typeof AuthedSettingsTeamRoute
+  '/api/admin/create-api-key': typeof ApiAdminCreateApiKeyRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings': typeof AuthedSettingsIndexRoute
   '/api/example': typeof ApiExampleIndexRoute
@@ -156,6 +164,7 @@ export interface FileRoutesById {
   '/_authed/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
   '/_authed/settings/organization': typeof AuthedSettingsOrganizationRoute
   '/_authed/settings/team': typeof AuthedSettingsTeamRoute
+  '/api/admin/create-api-key': typeof ApiAdminCreateApiKeyRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_authed/settings/': typeof AuthedSettingsIndexRoute
   '/api/example/': typeof ApiExampleIndexRoute
@@ -175,6 +184,7 @@ export interface FileRouteTypes {
     | '/developers/webhooks'
     | '/settings/organization'
     | '/settings/team'
+    | '/api/admin/create-api-key'
     | '/api/auth/$'
     | '/settings/'
     | '/api/example/'
@@ -191,6 +201,7 @@ export interface FileRouteTypes {
     | '/developers/webhooks'
     | '/settings/organization'
     | '/settings/team'
+    | '/api/admin/create-api-key'
     | '/api/auth/$'
     | '/settings'
     | '/api/example'
@@ -209,6 +220,7 @@ export interface FileRouteTypes {
     | '/_authed/developers/webhooks'
     | '/_authed/settings/organization'
     | '/_authed/settings/team'
+    | '/api/admin/create-api-key'
     | '/api/auth/$'
     | '/_authed/settings/'
     | '/api/example/'
@@ -220,6 +232,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   NoOrgRoute: typeof NoOrgRoute
   AcceptInvitationIdRoute: typeof AcceptInvitationIdRoute
+  ApiAdminCreateApiKeyRoute: typeof ApiAdminCreateApiKeyRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiExampleIndexRoute: typeof ApiExampleIndexRoute
 }
@@ -303,6 +316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/create-api-key': {
+      id: '/api/admin/create-api-key'
+      path: '/api/admin/create-api-key'
+      fullPath: '/api/admin/create-api-key'
+      preLoaderRoute: typeof ApiAdminCreateApiKeyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authed/settings/team': {
       id: '/_authed/settings/team'
       path: '/team'
@@ -384,6 +404,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   NoOrgRoute: NoOrgRoute,
   AcceptInvitationIdRoute: AcceptInvitationIdRoute,
+  ApiAdminCreateApiKeyRoute: ApiAdminCreateApiKeyRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiExampleIndexRoute: ApiExampleIndexRoute,
 }

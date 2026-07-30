@@ -15,7 +15,9 @@
       "@__APP_NAME__/queues": ["../../packages/queues/src/index"],
       "@__APP_NAME__/queues/*": ["../../packages/queues/src/*"],
       "@__APP_NAME__/observe": ["../../packages/observability/src/index"],
-      "@__APP_NAME__/observe/*": ["../../packages/observability/src/*"]
+      "@__APP_NAME__/observe/*": ["../../packages/observability/src/*"],
+      "@__APP_NAME__/workflows": ["../../packages/workflows/src/index"],
+      "@__APP_NAME__/workflows/*": ["../../packages/workflows/src/*"]
     }
   },
   "include": ["src/**/*.ts"],

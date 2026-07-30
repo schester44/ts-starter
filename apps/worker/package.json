@@ -15,6 +15,7 @@
   "dependencies": {
     "@__APP_NAME__/observe": "workspace:*",
     "@__APP_NAME__/queues": "workspace:*",
+    "@__APP_NAME__/workflows": "workspace:*",
     "pino": "^9",
     "pino-pretty": "^13",
     "zod": "^4.4.3"

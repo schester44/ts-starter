@@ -1,0 +1,34 @@
+{
+  "name": "@__APP_NAME__/workflows",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./client": {
+      "types": "./src/client.ts",
+      "default": "./src/client.ts"
+    },
+    "./engine": {
+      "types": "./src/engine.ts",
+      "default": "./src/engine.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1",
+    "pg": "^8",
+    "pg-workflows": "^0.14.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "typescript": "^5"
+  }
+}

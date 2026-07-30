@@ -12,6 +12,7 @@ __metadata:
     "@__APP_NAME__/db": "workspace:*"
     "@__APP_NAME__/observe": "workspace:*"
     "@__APP_NAME__/queues": "workspace:*"
+    "@__APP_NAME__/workflows": "workspace:*"
     "@radix-ui/react-collapsible": "npm:^1.1.14"
     "@tailwindcss/vite": "npm:^4"
     "@tanstack/react-router": "npm:^1"
@@ -131,12 +132,26 @@ __metadata:
   dependencies:
     "@__APP_NAME__/observe": "workspace:*"
     "@__APP_NAME__/queues": "workspace:*"
+    "@__APP_NAME__/workflows": "workspace:*"
     "@types/node": "npm:^22"
     pino: "npm:^9"
     pino-pretty: "npm:^13"
     tsup: "npm:^8"
     typescript: "npm:^5"
     vite-tsconfig-paths: "npm:^5"
+    zod: "npm:^4.4.3"
+  languageName: unknown
+  linkType: soft
+
+"@__APP_NAME__/workflows@workspace:*, @__APP_NAME__/workflows@workspace:packages/workflows":
+  version: 0.0.0-use.local
+  resolution: "@__APP_NAME__/workflows@workspace:packages/workflows"
+  dependencies:
+    "@opentelemetry/api": "npm:^1"
+    "@types/node": "npm:^22"
+    pg: "npm:^8"
+    pg-workflows: "npm:^0.14.0"
+    typescript: "npm:^5"
     zod: "npm:^4.4.3"
   languageName: unknown
   linkType: soft
@@ -6933,6 +6948,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"base-convert-int-array@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "base-convert-int-array@npm:1.0.1"
+  checksum: 10c0/664f745dc97493389505f0e05619f3b20a15dbe6b52ad29963d6e0064880876825a89f46c19258f722e7bd547db6f6da6b64de632f3e659fc9d14060413de163
+  languageName: node
+  linkType: hard
+
 "baseline-browser-mapping@npm:^2.10.12":
   version: 2.10.18
   resolution: "baseline-browser-mapping@npm:2.10.18"
@@ -7441,6 +7463,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cron-parser@npm:^5.5.0, cron-parser@npm:^5.6.2":
+  version: 5.6.2
+  resolution: "cron-parser@npm:5.6.2"
+  dependencies:
+    luxon: "npm:^3.7.2"
+  checksum: 10c0/c65b33329c2d69d385d07906250d0961685d0416270950a34eae5efb423cc5e878f9f62c890390bf6aa3bd7e0e5e92442db0aec8a97d6396e2473c459dce24ad
+  languageName: node
+  linkType: hard
+
 "cross-spawn@npm:^7.0.6":
   version: 7.0.6
   resolution: "cross-spawn@npm:7.0.6"
@@ -7800,6 +7831,20 @@ __metadata:
   version: 2.0.0
   resolution: "es-module-lexer@npm:2.0.0"
   checksum: 10c0/ae78dbbd43035a4b972c46cfb6877e374ea290adfc62bc2f5a083fea242c0b2baaab25c5886af86be55f092f4a326741cb94334cd3c478c383fdc8a9ec5ff817
+  languageName: node
+  linkType: hard
+
+"es-toolkit@npm:^1.44.0":
+  version: 1.50.0
+  resolution: "es-toolkit@npm:1.50.0"
+  dependenciesMeta:
+    "@trivago/prettier-plugin-sort-imports@4.3.0":
+      unplugged: true
+    prettier-plugin-sort-re-exports@0.0.1:
+      unplugged: true
+    vitepress-plugin-sandpack@1.1.4:
+      unplugged: true
+  checksum: 10c0/80e3a212d337df6f20ed0330d1b62dda25f3ef6d4c83a33f13d521ccbf5b4ad1ac3e7e638572abd6080627f522707de76a5c9360350b713e5392739083ee1f24
   languageName: node
   linkType: hard
 
@@ -9227,6 +9272,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ksuid@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "ksuid@npm:3.0.0"
+  dependencies:
+    base-convert-int-array: "npm:^1.0.1"
+  checksum: 10c0/5fbdb50166419ffda162fa5019dccc45faf6ad6884fca87a557277f2ab3dd0fcdffe9723c013a7916c534fa0539a3d2ed265ac586358081c18ca1806361c7936
+  languageName: node
+  linkType: hard
+
 "kysely@npm:^0.28.14":
   version: 0.28.16
   resolution: "kysely@npm:0.28.16"
@@ -9454,7 +9508,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^3.2.1":
+"luxon@npm:^3.2.1, luxon@npm:^3.7.2":
   version: 3.7.2
   resolution: "luxon@npm:3.7.2"
   checksum: 10c0/ed8f0f637826c08c343a29dd478b00628be93bba6f068417b1d8896b61cb61c6deacbe1df1e057dbd9298334044afa150f9aaabbeb3181418ac8520acfdc2ae2
@@ -9814,6 +9868,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"non-error@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "non-error@npm:0.1.0"
+  checksum: 10c0/acaba9060f2682037b85241d914bbbf17210024e5bcce9f80ce104fec8f2946a19222b0503e3c1a5ed6d172354cf772f474211680c9d8559e4868cdd8e9d878d
+  languageName: node
+  linkType: hard
+
 "nopt@npm:^9.0.0":
   version: 9.0.0
   resolution: "nopt@npm:9.0.0"
@@ -9937,6 +9998,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"parse-duration@npm:^2.1.5":
+  version: 2.1.8
+  resolution: "parse-duration@npm:2.1.8"
+  checksum: 10c0/9d376d6942fcd40057db0dca733e4429ce09eb98f07169f610c80fc2df9082ee078f75381174e92a22cf5bc82f9828ceaa02b2b1dfc4a3dab2a70b13f0f9a8ee
+  languageName: node
+  linkType: hard
+
 "parse5-htmlparser2-tree-adapter@npm:^7.1.0":
   version: 7.1.0
   resolution: "parse5-htmlparser2-tree-adapter@npm:7.1.0"
@@ -10028,6 +10096,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pg-boss@npm:^12.16.0":
+  version: 12.26.3
+  resolution: "pg-boss@npm:12.26.3"
+  dependencies:
+    cron-parser: "npm:^5.6.2"
+    pg: "npm:^8.22.0"
+    serialize-error: "npm:^13.0.1"
+  bin:
+    pg-boss: dist/cli.js
+  checksum: 10c0/45bc46f20682b807a6a7f500ec8fd247e7441c6b3ca341197728a8e7eb35c044d0b9b260e42285440bcd1a191b1038371988cea1635d763054b822e632ffda09
+  languageName: node
+  linkType: hard
+
 "pg-cloudflare@npm:^1.4.0":
   version: 1.4.0
   resolution: "pg-cloudflare@npm:1.4.0"
@@ -10085,7 +10166,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pg@npm:^8.16.3":
+"pg-workflows@npm:^0.14.0":
+  version: 0.14.0
+  resolution: "pg-workflows@npm:0.14.0"
+  dependencies:
+    "@standard-schema/spec": "npm:^1.1.0"
+    cron-parser: "npm:^5.5.0"
+    es-toolkit: "npm:^1.44.0"
+    ksuid: "npm:^3.0.0"
+    parse-duration: "npm:^2.1.5"
+    pg-boss: "npm:^12.16.0"
+    typescript: "npm:^5.9.3"
+  peerDependencies:
+    "@opentelemetry/api": ^1.9.0
+    pg: ^8.0.0
+  peerDependenciesMeta:
+    "@opentelemetry/api":
+      optional: true
+  checksum: 10c0/225e16971212d25776f36732206bcc5fc295383047587f951cf9896a03591d8c388a28f6832acc482f5c20242108b6375c76035b66b23f586ab12cdfb785b476
+  languageName: node
+  linkType: hard
+
+"pg@npm:^8, pg@npm:^8.16.3, pg@npm:^8.22.0":
   version: 8.22.0
   resolution: "pg@npm:8.22.0"
   dependencies:
@@ -11077,6 +11179,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"serialize-error@npm:^13.0.1":
+  version: 13.0.1
+  resolution: "serialize-error@npm:13.0.1"
+  dependencies:
+    non-error: "npm:^0.1.0"
+    type-fest: "npm:^5.4.1"
+  checksum: 10c0/bca59e7b1d6ad6f8f50d698f2851b65a907a7a0fe63bb35fb8e1712781d7d7634fde49a2df1586d5aa6874e56c2e2304514725ef0810c7b964941d9bc7b7ae02
+  languageName: node
+  linkType: hard
+
 "serialize-error@npm:^8.1.0":
   version: 8.1.0
   resolution: "serialize-error@npm:8.1.0"
@@ -11375,6 +11487,13 @@ __metadata:
   dependencies:
     "@pkgr/core": "npm:^0.2.9"
   checksum: 10c0/cc4d446806688ae0d728ae7bb3f53176d065cf9536647fb85bdd721dcefbd7bf94874df6799ff61580f2b03a392659219b778a9254ad499f9a1f56c34787c235
+  languageName: node
+  linkType: hard
+
+"tagged-tag@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "tagged-tag@npm:1.0.0"
+  checksum: 10c0/91d25c9ffb86a91f20522cefb2cbec9b64caa1febe27ad0df52f08993ff60888022d771e868e6416cf2e72dab68449d2139e8709ba009b74c6c7ecd4000048d1
   languageName: node
   linkType: hard
 
@@ -11688,6 +11807,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"type-fest@npm:^5.4.1":
+  version: 5.8.0
+  resolution: "type-fest@npm:5.8.0"
+  dependencies:
+    tagged-tag: "npm:^1.0.0"
+  checksum: 10c0/c8aae118a763d550a9552a511dff6b71840a23dab4edf693cf1c4df22596942794e6f6723389bd9036a90182249d915158bacf0815a1ae87f05f901b1d5f574e
+  languageName: node
+  linkType: hard
+
 "typescript-eslint@npm:^8":
   version: 8.58.2
   resolution: "typescript-eslint@npm:8.58.2"
@@ -11703,7 +11831,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5, typescript@npm:^5.0.0, typescript@npm:^5.9.2":
+"typescript@npm:^5, typescript@npm:^5.0.0, typescript@npm:^5.9.2, typescript@npm:^5.9.3":
   version: 5.9.3
   resolution: "typescript@npm:5.9.3"
   bin:
@@ -11713,7 +11841,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.0.0#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.9.2#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.0.0#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.9.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.9.3#optional!builtin<compat/typescript>":
   version: 5.9.3
   resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
   bin:
