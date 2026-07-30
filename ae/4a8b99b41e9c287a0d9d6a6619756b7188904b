@@ -1,0 +1,54 @@
+packages/workflows/src/workflows/example.ts
+  s_93d9d3b74b28ff::t_4424eed4161127 2,4,16-19,25,27-39,41
+  s_93d9d3b74b28ff::t_16f7203bc6be6f 1,5-15,26
+  s_93d9d3b74b28ff::t_2854d7bccc3b83 21
+  s_93d9d3b74b28ff::t_ce321e9c26f65d 20,22-24,40,42-80
+  s_93d9d3b74b28ff::t_fa86722275877c 3
+  s_93d9d3b74b28ff::t_1e2105c7ecf6f3 81-83
+apps/worker/package.json
+  s_93d9d3b74b28ff::t_42aca05c492d4f 18
+packages/workflows/src/engine.ts
+  s_93d9d3b74b28ff::t_22281387a4a85d 7,16
+  s_93d9d3b74b28ff::t_e9edca6bc51d67 5
+  s_93d9d3b74b28ff::t_3238d8b4649636 2,4,8,10-11,13
+  s_93d9d3b74b28ff::t_540909d74e78ff 1,3,6,9,14-15,17-20
+  s_93d9d3b74b28ff::t_b63c96d8877e4c 12
+apps/worker/src/index.ts
+  s_93d9d3b74b28ff::t_e2aa0af983e140 4,8,11,20-28,33-40,44,50,54-55
+  s_93d9d3b74b28ff::t_085ed822c5647f 1
+  s_93d9d3b74b28ff::t_5a6477109c57e1 29-32
+apps/web/package.json
+  s_93d9d3b74b28ff::t_b39d148b76d0d0 17
+packages/workflows/src/client.ts
+  s_93d9d3b74b28ff::t_7ab7c37b9a2313 1-30
+turbo.json
+  s_93d9d3b74b28ff::t_0ef3dec32fd731 4
+packages/workflows/package.json
+  s_93d9d3b74b28ff::t_c5ccecf5e6652f 25
+  s_93d9d3b74b28ff::t_276ad19630a878 1-24,26,28-34
+  s_93d9d3b74b28ff::t_39bda2000e8007 27
+apps/worker/tsup.config.ts
+  s_93d9d3b74b28ff::t_efe8f8c60566a2 5
+packages/workflows/tsconfig.json
+  s_93d9d3b74b28ff::t_130f3a224fc9a5 1-16
+apps/worker/tsconfig.json
+  s_93d9d3b74b28ff::t_3d3154aee95202 18-20
+yarn.lock
+  s_93d9d3b74b28ff::t_6aacf38059b752 15,135,146-158,6951-6957,7466-7474,7837-7850,9275-9283,9511,9871-9877,10001-10007,10099-10111,10169-10190,11182-11191,11493-11499,11810-11818,11834,11844
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.17",
+  "base_commit_sha": "ae4a8b99b41e9c287a0d9d6a6619756b7188904b",
+  "prompts": {},
+  "sessions": {
+    "s_93d9d3b74b28ff": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019fb321-8eb2-7ac8-9141-8733b7af0a42",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    }
+  }
+}
