@@ -16,7 +16,6 @@ export default defineConfig({
       projects: ["./tsconfig.json"],
     }),
     tanstackStart(),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     nitro({ rollupConfig: { external: ["@opentelemetry/api", "@prisma/client"] } } as any),
     viteReact(),
     tailwindcss(),

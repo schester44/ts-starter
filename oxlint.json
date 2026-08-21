@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nicolo-ribaudo/oxlint-config-schema/main/json-schema.json",
+  "plugins": ["react", "typescript", "import"],
+  "ignorePatterns": [
+    "dist",
+    "node_modules",
+    ".output",
+    ".nitro",
+    "**/routeTree.gen.ts",
+    "**/build/**",
+    "**/generated/**",
+    "**/.turbo/**",
+    "**/.tanstack/**",
+    "**/coverage/**"
+  ],
+  "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-explicit-any": "error",
+    "import/no-duplicates": "error"
+  }
+}

@@ -8,7 +8,7 @@
     "build": "tsup",
     "dev": "npx tsx watch --env-file=../web/.env src/index.ts",
     "start": "node dist/index.js",
-    "lint": "eslint src/",
+    "lint": "oxlint --config ../../oxlint.json src/",
     "typecheck": "tsc --noEmit",
     "test": "vitest"
   },

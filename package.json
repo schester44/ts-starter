@@ -12,7 +12,9 @@
     "build": "turbo run build --env-mode=loose",
     "heroku-postbuild": "turbo run build --env-mode=loose",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "lint": "oxlint --config oxlint.json .",
+    "fmt": "oxfmt --write .",
+    "fmt:check": "oxfmt --check .",
     "typecheck": "turbo run typecheck",
     "generate": "turbo run generate",
     "migrate": "turbo run migrate",
@@ -20,21 +22,11 @@
     "reset": "turbo run reset"
   },
   "devDependencies": {
-    "@eslint/js": "^9",
-    "@stylistic/eslint-plugin": "^5",
     "@types/node": "^22",
     "@vitest/coverage-v8": "^4",
-    "eslint": "^9",
-    "eslint-config-prettier": "^10",
-    "eslint-plugin-prettier": "^5",
-    "eslint-plugin-react-hooks": "^5",
-    "eslint-plugin-react-refresh": "^0.4",
-    "eslint-plugin-unused-imports": "^4",
-    "globals": "^16",
-    "prettier": "^3",
+    "oxlint": "^1",
     "turbo": "^2",
     "typescript": "^5",
-    "typescript-eslint": "^8",
     "vite": "^7",
     "vitest": "^4"
   }
