@@ -1,0 +1,25 @@
+package.json
+  s_d8bf317ab658fc::t_68ee120d3e2b92 15-17,27
+apps/worker/package.json
+  s_d8bf317ab658fc::t_112628343be76c 11
+apps/web/package.json
+  s_d8bf317ab658fc::t_aaddb9c6cbcb62 10
+oxlint.json
+  s_d8bf317ab658fc::t_d8ccfc7ea2111e 1-22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.23",
+  "base_commit_sha": "808a2926383e0c0c5dfb04f3a32f72d59a014aa4",
+  "prompts": {},
+  "sessions": {
+    "s_d8bf317ab658fc": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a021b3-cce7-7e36-9beb-c36d10bca103",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    }
+  }
+}
