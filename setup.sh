@@ -46,7 +46,7 @@ gum confirm "Look good?" || exit 0
 # ─── Replace placeholders ──────────────────────────────────────
 echo ""
 gum spin --title "Replacing placeholders..." -- bash -c "
-  find . -type f \\( -name '*.ts' -o -name '*.tsx' -o -name '*.json' -o -name '*.md' -o -name '.env*' \\) \
+  find . -type f \\( -name '*.ts' -o -name '*.tsx' -o -name '*.json' -o -name '*.md' -o -name '.env*' -o -name '*.sh' -o -name 'Dockerfile' \\) \
     ! -path '*/node_modules/*' ! -path '*/.turbo/*' ! -path '*/generated/*' \
     ! -path '*/yarn.lock' ! -path '*/routeTree.gen*' ! -path '*/skills-lock*' \
     -exec sed -i '' \
