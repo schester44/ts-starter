@@ -1,0 +1,19 @@
+apps/web/src/styles.css
+  s_76830e26a805e1::t_3260445916e67e 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "426b9788bd027b4d6f6f82efaf2bde424b18a44a",
+  "prompts": {},
+  "sessions": {
+    "s_76830e26a805e1": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a05831-6f83-7db3-9a6a-b1d94f5bf575",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    }
+  }
+}
