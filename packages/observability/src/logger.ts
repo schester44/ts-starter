@@ -64,8 +64,8 @@ export function createLogger(service: string) {
         if (activeSpan) {
           const spanContext = activeSpan.spanContext();
           return {
-            "trace.id": spanContext.traceId,
-            "span.id": spanContext.spanId,
+            trace_id: spanContext.traceId,
+            span_id: spanContext.spanId,
           };
         }
 

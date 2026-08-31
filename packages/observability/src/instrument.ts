@@ -38,7 +38,9 @@ const enabled =
 
 if (enabled) {
   const endpoint =
-    process.env.OTEL_EXPORTER_OTLP_ENDPOINT || "http://localhost:4318";
+    process.env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT ||
+    process.env.OTEL_EXPORTER_OTLP_ENDPOINT ||
+    "http://localhost:4318";
 
   const resource = resourceFromAttributes({
     [ATTR_SERVICE_NAME]: process.env.OTEL_SERVICE_NAME || "__APP_NAME__",
@@ -46,13 +48,8 @@ if (enabled) {
     "deployment.environment.name": process.env.NODE_ENV || "development",
   });
 
-  const traceExporter = new OTLPTraceExporter({
-    url: `${endpoint}/v1/traces`,
-  });
-
-  const metricExporter = new OTLPMetricExporter({
-    url: `${endpoint}/v1/metrics`,
-  });
+  const traceExporter = new OTLPTraceExporter();
+  const metricExporter = new OTLPMetricExporter();
 
   const sdk = new NodeSDK({
     resource,
