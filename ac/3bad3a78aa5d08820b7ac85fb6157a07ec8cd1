@@ -1,0 +1,27 @@
+Dockerfile
+  s_76830e26a805e1::t_f8b6def8cbd811 1-60
+deploy/release.sh
+  s_76830e26a805e1::t_eec76a9e3773df 1-40
+railway.json
+  s_76830e26a805e1::t_08c26d5b1d4d07 1-11
+setup.sh
+  s_76830e26a805e1::t_ccd38cb16ebee6 49
+.dockerignore
+  s_76830e26a805e1::t_372b0ca03e2757 1-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "ac3bad3a78aa5d08820b7ac85fb6157a07ec8cd1",
+  "prompts": {},
+  "sessions": {
+    "s_76830e26a805e1": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a05831-6f83-7db3-9a6a-b1d94f5bf575",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    }
+  }
+}
