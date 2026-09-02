@@ -1,0 +1,19 @@
+apps/web/src/start.ts
+  s_5df4bdd2544a30::t_ac57ec3f336433 1,3-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "ab30c29894954d1652ddce2d16f6682cf31e0daf",
+  "prompts": {},
+  "sessions": {
+    "s_5df4bdd2544a30": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a05f97-8de1-742d-b0f9-47cf688a4f0f",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    }
+  }
+}
